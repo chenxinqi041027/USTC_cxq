@@ -1,0 +1,97 @@
+2.异常处理
+Code：
+import math
+
+class InvalidTriangleError(Exception):
+    def __init__(self, message):
+        self.message = message
+        
+def triangle(a, b, c):
+    if a + b > c and a + c > b and b + c > a:
+        s = (a+b+c)/2
+        area = math.sqrt(s*(s-a)*(s-b)*(s-c))
+        return area
+    else:
+        raise InvalidTriangleError('The three input parameters cannot form a triangle.')
+        
+import sys
+try:
+    # sys.argv = input('Please input three parameters:')
+    x = float(sys.argv[1])
+    y = float(sys.argv[2])
+    z = float(sys.argv[3])
+    print('The three input parameters can form a triangle.\nThe area is %f.' %triangle(x, y, z))
+except IndexError: # 参数小于三个
+    print('Three arguments must be supplied on the command line.')
+except ValueError: # 参数不全为float类型
+    print('The three input parameters are not all of float type.')
+except InvalidTriangleError as ex: # 不能构成三角形
+    print(ex.message)
+finally:
+    print("executing finally clause")
+
+
+Running Results：
+In[1]: cd C:/Users/28932/Desktop/python/python_homework/7/
+C:\Users\28932\Desktop\python\python_homework\7
+
+In[2]: run 7_2.py 1 1 1
+The three input parameters can form a triangle.
+The area is 0.433013.
+executing finally clause
+
+In[3]: run 7_2.py 1
+Three arguments must be supplied on the command line.
+executing finally clause
+
+In[4]: run 7_2.py 1 . .
+The three input parameters are not all of float type.
+executing finally clause
+
+In[5]: run 7_2.py 1 2 3
+The three input parameters cannot form a triangle.
+executing finally clause
+
+In[6]: run 7_2.py 1.0 2.0 3.0
+The three input parameters cannot form a triangle.
+executing finally clause
+
+In[7]:
+
+3.文件读写
+Code：
+def extract_data(filename):
+    with open(filename,'r') as infile:
+        infile.readline()
+        Insentences = []
+        for line in infile:
+            if line.find('In') >= 0:
+                everysentences = ''
+                words = line.split()
+                del words[0]
+                for i in words:
+                    everysentences = everysentences + i + ' '
+                Insentences.append(everysentences)
+        return Insentences
+Insentences = extract_data('C:/Users/28932/Desktop/程序7.21.txt')
+with open('C:/Users/28932/Desktop/输出.txt','w') as outfile:
+    for i in Insentences:
+	  print(i)
+        outfile.write(i)
+        outfile.write('\n')
+
+Running Results：
+In[1]: runfile('C:/Users/28932/Desktop/python/python_homework/7/7_3.py', wdir='C:/Users/28932/Desktop/python/python_homework/7')
+import numpy as np; a = np.arrangr(1, 16, 2)**2; a 
+b = a.reshape(2,4); b 
+np.savetxt('D:/Pythom/dat/b.txt', b) 
+c = np.loadtxt('D:/Python/dat/b.txt'); c 
+np.save('D:/Python/dat/b.npy', b) 
+c = np.load('D:/Python/dat/b.npy'); c 
+np.savez('D:/Python/dat/ab.npz') 
+cd = np.load('D:/Python/dat/ab.npz') 
+c = cd['arr_0']; d 
+d = cd['arr_1']; d 
+
+In[2]:
+

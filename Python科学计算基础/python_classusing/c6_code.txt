@@ -1,0 +1,682 @@
+##### start of Listing 6.1 ##### 
+In[1]: import numpy as np
+In[2]: a = np.array([2, 8, 64]); a
+Out[2]: array([2, 8, 64])
+In[3]: a.dtype, a.ndim, a.shape, a.size
+Out[3]: (dtype('int32'), 1, (3,), 3)
+In[4]: b = np.array([3.14, 2.71, 6.83, -8.34])
+In[5]: b.dtype, b.ndim, b.shape, b.size
+Out[5]: (dtype('float64'), 1, (4,), 4)
+In[6]: c = np.array([(1, 2.4), (6, -3), (8, -5)])
+In[7]: c.ndim, c.shape, c.size
+Out[7]:  (2, (3, 2), 6)
+In[8]: d = np.array([95536, 2.71, 6, -8.34], dtype=np.int16); d
+Out[8]: array([30000,     2,     6,    -8], dtype=int16))
+##### end of Listing 6.1 ##### 
+
+##### start of Listing 6.2 ##### 
+In[1]: a = np.zeros((2, 3)); a
+Out[1]:
+array([[0., 0., 0.],
+       [0., 0., 0.]])
+In[2]: np.ones((3, 2))
+Out[2]:
+array([[1., 1.],
+       [1., 1.],
+       [1., 1.]])
+In[3]: c = np.ones_like(a); c
+Out[3]:
+array([[1., 1., 1.],
+       [1., 1., 1.]])
+In[4]: np.arange(2, 30, 7)
+Out[4]: array([ 2,  9, 16, 23])
+In[5]: np.arange(0.2, 3.01, 0.7)
+Out[5]: array([0.2, 0.9, 1.6, 2.3, 3. ])
+In[6]: np.arange(6)
+Out[6]: array([0, 1, 2, 3, 4, 5])
+In[7]: np.linspace(0, 3, 7)
+Out[7]: array([0. , 0.5, 1. , 1.5, 2. , 2.5, 3. ])
+In[8]: np.random.seed(10); np.random.rand(3, 2)
+Out[8]:
+array([[0.77132064, 0.02075195],
+       [0.63364823, 0.74880388],
+       [0.49850701, 0.22479665]])
+In[9]: def f(x, y): return (x + 2) ** 2 + y ** 3
+In[10]: np.fromfunction(f, (2, 3), dtype=int)
+Out[10]: array([[ 4,  5, 12],
+                [ 9, 10, 17]])
+##### end of Listing 6.2 ##### 
+
+##### start of Listing 6.3 ##### 
+In[1]: h=np.arange(1,13).reshape(3,4); h
+Out[1]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 10, 11, 12]])
+In[2]: h.flatten()
+Out[2]: array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12])
+In[3]: h.reshape(2, 6)
+Out[3]:
+array([[ 1,  2,  3,  4,  5,  6],
+       [ 7,  8,  9, 10, 11, 12]])
+In[4]: h.T
+Out[4]:
+array([[ 1,  5,  9],
+       [ 2,  6, 10],
+       [ 3,  7, 11],
+       [ 4,  8, 12]])
+In[5]: h
+Out[5]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 10, 11, 12]])
+In[6]: h.resize(2, 6); h
+Out[6]:
+array([[ 1,  2,  3,  4,  5,  6],
+       [ 7,  8,  9, 10, 11, 12]])
+##### end of Listing 6.3 ##### 
+
+##### start of Listing 6.4 ##### 
+In[1]: a = np.arange(1, 7).reshape(2,3); a
+Out[1]:
+array([[1, 2, 3],
+       [4, 5, 6]])
+In[2]: b = np.arange(7, 13).reshape(2,3); b
+Out[2]:
+array([[ 7,  8,  9],
+       [10, 11, 12]])
+In[3]: np.hstack((a, b))
+Out[3]:
+array([[ 1,  2,  3,  7,  8,  9],
+       [ 4,  5,  6, 10, 11, 12]])
+In[4]: np.vstack((a, b))
+Out[4]:
+array([[ 1,  2,  3],
+       [ 4,  5,  6],
+       [ 7,  8,  9],
+       [10, 11, 12]])
+In[5]: np.r_[np.array([1,3,7]), 0, 8:2:-2, 0]
+Out[5]: array([1, 3, 7, 0, 8, 6, 4, 0])
+In[6]: np.r_[-1:2:6j, [1]*2, 5]
+Out[6]: array([-1. , -0.4,  0.2,  0.8,  1.4,  2. ,  1. ,  1. ,
+                5. ])
+##### end of Listing 6.4 ##### 
+
+##### start of Listing 6.5 ##### 
+In[1]: c = np.arange(1, 25).reshape(2,12); c
+Out[1]:
+array([[ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12],
+       [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]])
+In[2]: np.hsplit(c, 4)
+Out[2]:
+[array([[ 1,  2,  3],
+        [13, 14, 15]]),
+ array([[ 4,  5,  6],
+        [16, 17, 18]]),
+ array([[ 7,  8,  9],
+        [19, 20, 21]]),
+ array([[10, 11, 12],
+        [22, 23, 24]])]
+In[3]: np.hsplit(c, (4, 7, 9))
+Out[3]:
+[array([[ 1,  2,  3,  4],
+        [13, 14, 15, 16]]),
+ array([[ 5,  6,  7],
+        [17, 18, 19]]),
+ array([[ 8,  9],
+        [20, 21]]),
+ array([[10, 11, 12],
+        [22, 23, 24]])]
+In[4]: d = np.arange(1, 25).reshape(6,4); d
+Out[4]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 10, 11, 12],
+       [13, 14, 15, 16],
+       [17, 18, 19, 20],
+       [21, 22, 23, 24]])
+In[5]: np.vsplit(d, (2, 3, 5))
+Out[5]:
+[array([[1, 2, 3, 4],
+        [5, 6, 7, 8]]),
+ array([[ 9, 10, 11, 12]]),
+ array([[13, 14, 15, 16],
+        [17, 18, 19, 20]]),
+ array([[21, 22, 23, 24]])]
+##### end of Listing 6.5 ##### 
+
+##### start of Listing 6.6 ##### 
+In[1]: a = np.arange(6).reshape(2, 3); a
+Out[1]:
+array([[0, 1, 2],
+       [3, 4, 5]])
+In[2]: b = np.arange(2,18,3).reshape(2, 3); b
+Out[2]:
+array([[ 2,  5,  8],
+       [11, 14, 17]])
+In[3]: a+b, a-b, a*b, a/b, -a, -b+(a**np.e-0.818*b+6)**(-np.pi)
+Out[3]:
+(array([[ 2,  6, 10],
+        [14, 18, 22]]),
+ array([[ -2,  -4,  -6],
+        [ -8, -10, -12]]),
+ array([[ 0,  5, 16],
+        [33, 56, 85]]),
+ array([[0.        , 0.2       , 0.25      ],
+        [0.27272727, 0.28571429, 0.29411765]]),
+ array([[ 0, -1, -2],
+        [-3, -4, -5]]),
+ array([[ -1.99023341,  -4.96511512,  -7.99647626],
+        [-10.99985895, -13.99998898, -16.99999851]]))
+In[4]: c = b.reshape(3, 2); c
+Out[4]:
+array([[ 2,  5],
+       [ 8, 11],
+       [14, 17]])
+In[5]: a@c, a.dot(c)
+Out[5]:
+(array([[ 36,  45],
+        [108, 144]]),
+ array([[ 36,  45],
+        [108, 144]]))
+In[6]: d=a*3+b; b -= a; d, b
+Out[6]:
+(array([[ 2,  8, 14],
+        [20, 26, 32]]),
+ array([[ 2,  4,  6],
+        [ 8, 10, 12]]))
+In[7]: np.random.seed(10); e = np.random.rand(2, 3); e
+Out[7]:
+array([[0.77132064, 0.02075195, 0.63364823],
+       [0.74880388, 0.49850701, 0.22479665]])
+In[8]: f = e + a - 2*b; f, f.dtype
+Out[8]:
+(array([[ -3.22867936,  -8.97924805, -13.36635177],
+        [-18.25119612, -23.50149299, -28.77520335]]),
+ dtype('float64'))
+##### end of Listing 6.6 ##### 
+
+##### start of Listing 6.7 ##### 
+In[1]: g = np.array([[2,6,5],[4,1,3]]); g
+Out[1]: array([[2, 6, 5],
+               [4, 1, 3]])
+In[2]: g.sum(), g.max(), g.min()
+Out[2]:  (21, 6, 1)
+In[3]: g.max(axis=0), g.max(axis=1)
+Out[3]:  (array([4, 6, 5]), array([6, 4]))
+In[4]: g.min(axis=0), g.min(axis=1)
+Out[4]: (array([2, 1, 3]), array([2, 1]))
+In[5]: np.sort(g)                
+Out[5]: array([[2, 5, 6],
+               [1, 3, 4]])
+In[6]: np.sort(g, axis=None)     
+Out[6]: array([1, 2, 3, 4, 5, 6])
+In[7]: np.sort(g, axis=0)        
+Out[7]: array([[2, 1, 3],
+               [4, 6, 5]])
+In[8]: np.sort?
+Out[8]: Signature: np.sort(a, axis=-1, kind=None, order=None)
+Docstring:
+Return a sorted copy of an array.
+
+Parameters
+----------
+a : array_like
+    Array to be sorted.
+axis : int or None, optional
+......
+In[9]: np.sqrt(b) + np.exp(a - 5) * np.cos(e**1.3 - f)
+Out[9]:
+array([[1.40958124, 2.22018241, 2.83965649],
+       [3.45077796, 3.87699024, 3.31766545]])
+##### end of Listing 6.7 ##### 
+
+##### start of Listing 6.8 ##### 
+In[1]: a = np.arange(1, 16, 2)**2; a
+Out[1]: array([  1,   9,  25,  49,  81, 121, 169, 225],
+              dtype=int32)
+In[2]: a[3], a[1:7:2]
+Out[2]: (49, array([  9,  49, 121], dtype=int32))
+In[3]: a[:6:3] = 361; a
+Out[3]: array([361,   9,  25, 361,  81, 121, 169, 225],
+              dtype=int32)
+In[4]: a[::-1]
+Out[4]: array([225, 169, 121,  81, 361,  25,   9, 361],
+              dtype=int32)
+In[5]: for i in a: print(np.sqrt(i), end=' ')
+Out[6]: 19.0 3.0 5.0 19.0 9.0 11.0 13.0 15.0
+##### end of Listing 6.8 ##### 
+
+##### start of Listing 6.9 ##### 
+In[1]: def f(x, y): return x * 4 + y + 1
+In[2]: h = np.fromfunction(f, (3, 4), dtype=int); h
+Out[2]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 10, 11, 12]])
+In[3]: h[1, 2], h[0, 3], h[2, 2]
+Out[3]: (7, 4, 11)
+In[4]: h[1:3], h[1:3,], h[1:3,:], h[0]
+Out[4]:
+(array([[ 5,  6,  7,  8],
+        [ 9, 10, 11, 12]]),
+ array([[ 5,  6,  7,  8],
+        [ 9, 10, 11, 12]]),
+ array([[ 5,  6,  7,  8],
+        [ 9, 10, 11, 12]]),
+ array([1, 2, 3, 4]))
+In[5]: h[:, 1:4:2], h[:, 3:1:-1], h[:, -2]
+Out[5]:
+(array([[ 2,  4],
+        [ 6,  8],
+        [10, 12]]),
+ array([[ 4,  3],
+        [ 8,  7],
+        [12, 11]]),
+ array([ 3,  7, 11]))
+In[6]: for row in h: print(row)
+Out[6]:
+[1 2 3 4]
+[5 6 7 8]
+[ 9 10 11 12]
+In[7]: for element in h.flat: print(element, end=' ')
+Out[7]: 1 2 3 4 5 6 7 8 9 10 11 12
+In[8]: h[np.ix_([0,2], [1])]  
+Out[8]:
+array([[ 2],
+       [10]])
+In[9]: h[np.ix_([0, 2], [0, 2])] 
+Out[9]:
+array([[ 1,  3],
+       [ 9, 11]])
+In[10]: h[[0, 2], [0, 2]]
+Out[10]: array([ 1, 11])
+In[11]: h[[0, 2]]
+Out[11]:
+array([[ 1,  2,  3,  4],
+       [ 9, 10, 11, 12]])
+In[12]: h[:,[0,2]]
+Out[12]:
+array([[ 1,  3],
+       [ 5,  7],
+       [ 9, 11]])
+In[13]: h[1:3, 0:3]
+Out[13]:
+array([[ 5,  6,  7],
+       [ 9, 10, 11]])
+In[14]: j = np.arange(24).reshape(3, 2, 4); j
+Out[14]:
+array([[[ 0,  1,  2,  3],
+        [ 4,  5,  6,  7]],
+
+       [[ 8,  9, 10, 11],
+        [12, 13, 14, 15]],
+
+       [[16, 17, 18, 19],
+        [20, 21, 22, 23]]])
+In[15]: j[2, ...]
+Out[15]:
+array([[16, 17, 18, 19],
+       [20, 21, 22, 23]])
+In[16]: j[:, 1:2, :]
+Out[16]:
+array([[[ 4,  5,  6,  7]],
+
+       [[12, 13, 14, 15]],
+
+       [[20, 21, 22, 23]]])
+In[17]: j[...,  1:3]
+Out[17]:
+array([[[ 1,  2],
+        [ 5,  6]],
+
+       [[ 9, 10],
+        [13, 14]],
+
+       [[17, 18],
+        [21, 22]]])
+##### end of Listing 6.9 ##### 
+
+##### start of Listing 6.10 ##### 
+In[1]: a = np.arange(1, 16, 2)**2; a
+Out[1]: array([  1,   9,  25,  49,  81, 121, 169, 225])
+In[2]: i = np.array([3, 2, 7, 3, 5]); a[i]
+Out[2]: array([ 49,  25, 225,  49, 121], dtype=int32)
+In[3]: j = np.array([[3, 2, 4], [1, 5, 6]]); a[j]
+Out[3]:
+array([[ 49,  25,  81],
+       [  9, 121, 169]], dtype=int32)
+In[4]: b = a.reshape(4,2); b
+Out[4]:
+array([[  1,   9],
+       [ 25,  49],
+       [ 81, 121],
+       [169, 225]], dtype=int32)
+In[5]: b[np.array([2, 3, 1, 2])]
+Out[5]:
+array([[ 81, 121],
+       [169, 225],
+       [ 25,  49],
+       [ 81, 121]], dtype=int32)
+In[6]: b[np.array([[2, 3], [1, 2]])]
+Out[6]:
+array([[[ 81, 121],
+        [169, 225]],
+
+       [[ 25,  49],
+        [ 81, 121]]], dtype=int32)
+In[7]: i1 = np.array([[3, 2],  
+                      [2, 1]])
+In[8]: i2 = np.array([[0, 1],  
+                      [1, 0]])
+In[9]: b[i1, i2]
+Out[9]:
+array([[169, 121],
+       [121,  25]], dtype=int32)
+In[10]: b[i1, i2] = 36; a
+Out[10]: array([  1,   9,  36,  49,  81,  36,  36, 225],
+               dtype=int32)
+##### end of Listing 6.10 ##### 
+
+##### start of Listing 6.11 ##### 
+In[1]: data = np.cos(np.arange(103, 123)).reshape(5, 4); data
+Out[1]:
+array([[-0.78223089, -0.94686801, -0.24095905,  0.68648655],
+       [ 0.98277958,  0.3755096 , -0.57700218, -0.99902081],
+       [-0.50254432,  0.4559691 ,  0.99526664,  0.61952061],
+       [-0.32580981, -0.97159219, -0.7240972 ,  0.18912942],
+       [ 0.92847132,  0.81418097, -0.04866361, -0.86676709]])
+In[2]: maxind0 = data.argmax(axis=0); maxind0
+Out[2]: array([1, 4, 2, 0], dtype=int32)
+In[3]: data_max0 = data[maxind0, range(data.shape[1])]; data_max0
+Out[3]: array([0.98277958, 0.81418097, 0.99526664, 0.68648655])
+In[2]: maxind1 = data.argmax(axis=1); maxind1
+Out[2]: array([3, 0, 2, 3, 0], dtype=int32)
+In[3]: data_max1 = data[range(data.shape[0]), maxind1]; data_max1
+Out[3]: array([0.68648655, 0.98277958, 0.99526664, 0.18912942,
+               0.92847132])
+##### end of Listing 6.11 ##### 
+
+##### start of Listing 6.12 ##### 
+In[1]: a = np.arange(1, 16, 2)**2; a
+Out[1]: array([  1,   9,  25,  49,  81, 121, 169, 225],
+              dtype=int32)
+In[2]: g = a > 50; g
+Out[2]: array([False, False, False, False, True, True, True,
+               True])
+In[3]: a[g] = 0; a
+Out[3]:  array([ 1,  9, 25, 49,  0,  0,  0,  0], dtype=int32)
+In[4]: b = a.reshape(2, 4); b
+Out[4]:
+array([[ 1,  9, 25, 49],
+       [ 0,  0,  0,  0]], dtype=int32)
+In[5]: i1 = np.array([False, True]); b[i1, :]
+Out[5]: array([[0, 0, 0, 0]], dtype=int32)
+In[6]: i2 = np.array([True, False, False, True]); b[:, i2]
+Out[6]:
+array([[ 1, 49],
+       [ 0,  0]], dtype=int32)
+##### end of Listing 6.12 ##### 
+
+##### start of Listing 6.13 ##### 
+In[1]: def f(x, y): return x * 4 + y + 1
+In[2]: h = np.fromfunction(f, (3, 4), dtype=int); h
+Out[2]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 10, 11, 12]])
+In[3]: k = h
+In[4]: k is h, id(k), id(h)
+Out[4]: (True, 186428160, 186428160)
+In[5]: m = h.view()
+In[6]: m is h, m.base is h, m.flags.owndata
+Out[6]: (False, True, False)
+In[7]: m.resize((2, 6)); h.shape
+Out[7]: (3, 4)
+In[8]: m[1, 3] = 16; m, h
+Out[8]:
+(array([[ 1,  2,  3,  4,  5,  6],
+        [ 7,  8,  9, 16, 11, 12]]),
+ array([[ 1,  2,  3,  4],
+        [ 5,  6,  7,  8],
+        [ 9, 16, 11, 12]]))
+In[9]: t = h[0:2, 1:3]; t
+Out[9]:
+array([[2, 3],
+       [6, 7]])
+In[10]: t[1, 0] = 20; h
+Out[10]:
+array([[ 1,  2,  3,  4],
+       [ 5, 20,  7,  8],
+       [ 9, 16, 11, 12]])
+In[11]: v = h.copy()
+In[12]: v is h, v.base is h, v.flags.owndata
+Out[12]: (False, False, True)
+In[13]: v[1, 1] = 36; v[1, 1], h[1, 1]
+Out[13]: (36, 20)
+In[14]: p = h.ravel(); p
+Out[14]: array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 16, 11, 12])
+In[15]: p[9]=99; h
+Out[15]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 99, 11, 12]])
+In[16]: a = np.arange(1000000); b = a[:100].copy()
+In[17]: del a  
+##### end of Listing 6.13 ##### 
+
+##### start of Listing 6.14 ##### 
+In[1]: import numpy as np
+In[2]: A = np.array([[4,3],[2,1]]); A
+Out[3]:
+array([[4, 3],
+       [2, 1]])
+In[3]: from scipy import linalg; linalg.inv(A)
+Out[3]:
+array([[-0.5,  1.5],
+       [ 1. , -2. ]])
+In[4]: b = np.array([[6,5]]); b  
+Out[4]: array([[6, 5]])
+In[5]: b.T
+Out[5]:
+array([[6],
+       [5]])
+In[6]: A*b   
+Out[6]:
+array([[24, 15],
+       [12,  5]])
+In[7]: A.dot(b.T) 
+Out[7]:
+array([[39],
+       [17]])
+In[8]: b = np.array([6,5]); b
+Out[8]: array([6, 5])
+In[9]: b.T   
+Out[9]: array([6, 5])
+In[10]: A.dot(b)
+Out[10]: array([39, 17])
+In[11]: A.dot(linalg.inv(A)
+Out[11]:  array([[1., 0.],
+                 [0., 1.]])
+In[12]: linalg.det(A)
+Out[12]: -2.0
+In[13]: linalg.norm(A), linalg.norm(b)
+Out[13]: (5.477225575051661, 7.810249675906654)
+In[14]: x = np.linalg.solve(A, b); x
+Out[14]: array([ 4.5, -4. ])
+In[15]: A.dot(x) - b
+Out[15]: array([0., 0.])
+In[16]: la, v = linalg.eig(A)
+In[17]: la
+Out[17]: array([ 5.37228132+0.j, -0.37228132+0.j])
+In[18]: v
+Out[18]:
+array([[ 0.90937671, -0.56576746],
+       [ 0.41597356,  0.82456484]])
+In[19]: A.dot(v[:, 0]) - la[0] * v[:, 0]
+Out[19]: array([0.+0.j, 0.+0.j])
+In[20]: np.sum(abs(v**2), axis=0)
+Out[20]: array([1., 1.])
+In[21]: A = np.array([[2,3,5],[7,9,11]])
+In[22]: U,s,V = linalg.svd(A); s
+Out[22]: array([16.96707058,  1.05759909])
+In[23]: m, n = A.shape; S = linalg.diagsvd(s, m, n); S
+Out[23]:
+array([[16.96707058,  0.        ,  0.        ],
+       [ 0.        ,  1.05759909,  0.        ]])
+In[24]: U.dot(S.dot(V))
+Out[24]:
+array([[ 2.,  3.,  5.],
+       [ 7.,  9., 11.]])
+In[25]: tol = 1E-10; (abs(s) > tol).sum()  
+Out[25]: 2
+In[26]: C = np.array([[2,3,5,7],[9,11,13,17],[19,23,29,31]])
+In[26]: p, l, u = linalg.lu(C); p, l, u
+Out[26]:
+(array([[0., 1., 0.],
+        [0., 0., 1.],
+        [1., 0., 0.]]),
+ array([[1.        , 0.        , 0.        ],
+        [0.10526316, 1.        , 0.        ],
+        [0.47368421, 0.18181818, 1.        ]]),
+ array([[19.        , 23.        , 29.        , 31.        ],
+        [ 0.        ,  0.57894737,  1.94736842,  3.73684211],
+        [ 0.        ,  0.        , -1.09090909,  1.63636364]]))
+In[27]: np.allclose(C - p @ l @ u, np.zeros((3, 4)))
+Out[27]: True
+##### end of Listing 6.14 ##### 
+
+##### start of Listing 6.15 ##### 
+In[1]: import numpy as np
+In[2]: import scipy.sparse as sps
+In[3]: data = np.arange(12).reshape((3, 4)) + 1; data
+Out[3]:
+array([[ 1,  2,  3,  4],
+       [ 5,  6,  7,  8],
+       [ 9, 10, 11, 12]])
+In[4]: offsets = np.array([0, 1, -2])
+In[5]: dia = sps.dia_matrix((data, offsets), shape=(4, 4)); dia
+Out[5]:
+<4x4 sparse matrix of type '<class 'numpy.int32'>'
+	with 9 stored elements (3 diagonals) in DIAgonal format>
+In[6]: print(dia.todense())
+Out[6]:
+[[ 1  6  0  0]
+ [ 0  2  7  0]
+ [ 9  0  3  8]
+ [ 0 10  0  4]]
+In[7]: lil = dia.tolil()  
+In[8]: lil.rows  
+Out[8]:
+array([list([0, 1]), list([1, 2]), list([0, 2, 3]),
+       list([1, 3])], dtype=object)
+In[9]: lil.data  
+Out[9]:
+array([list([1, 6]), list([2, 7]), list([9, 3, 8]),
+       list([10, 4])], dtype=object)
+In[10]: coo = lil.tocoo() 
+In[11]: coo.row  
+Out[11]: array([0, 0, 1, 1, 2, 2, 2, 3, 3])
+In[12]: coo.col  
+Out[12]: array([0, 1, 1, 2, 0, 2, 3, 1, 3])
+In[13]: coo.data  
+Out[13]: array([ 1,  6,  2,  7,  9,  3,  8, 10,  4], dtype=int32)
+In[14]: dok = coo.todok() 
+In[15]: dok.items()  
+Out[15]: dict_items([((0, 0), 1), ((2, 0), 9), ((0, 1), 6),
+                     ((1, 1), 2), ((3, 1), 10), ((1, 2), 7),
+                     ((2, 2), 3), ((2, 3), 8), ((3, 3), 4)])
+In[16]: csr = dok.tocsr() 
+In[17]: csr.data  
+Out[17]: array([ 1,  6,  2,  7,  9,  3,  8, 10,  4], dtype=int32)
+In[18]: csr.indices  
+Out[18]: array([0, 1, 1, 2, 0, 2, 3, 1, 3], dtype=int32)
+In[19]: csr.indptr  
+Out[19]: array([0, 2, 4, 7, 9], dtype=int32)
+In[20]: csr * np.array([4, 3, 2, 1])  
+Out[20]: array([22, 20, 50, 34], dtype=int32)
+In[21]: import scipy.sparse.linalg as spla
+In[22]: b = np.array([4, 2, 1, 3])
+In[23]: x = spla.spsolve(csr, b); x  
+Out[23]:
+array([ 0.64503817,  0.55916031,  0.1259542 , -0.64790076])
+In[24]: x = np.linalg.solve(csr.todense(), b); x
+Out[24]: array([ 0.64503817,  0.55916031,  0.1259542 ,
+                -0.64790076])
+In[25]: x = spla.bicg(csr, b); x  
+Out[25]: (array([ 0.64503817,  0.55916031,  0.1259542 ,
+                 -0.64790076]), 0)
+In[26]: row = np.array([0, 0, 1, 2, 2, 2])
+In[27]: col = np.array([0, 2, 1, 0, 1, 2])
+In[28]: data = np.array([1, 2, 3, 4, 5, 6])
+In[29]: print(sps.csr_matrix((data, (row, col)), 
+              shape=(3, 3)).toarray())
+Out[29]: [[1 0 2]
+          [0 3 0]
+          [4 5 6]]
+In[30]: indptr = np.array([0, 2, 3, 6])
+In[31]: indices = np.array([0, 2, 1, 0, 1, 2])
+In[32]: data = np.array([1, 2, 3, 4, 5, 6])
+In[33]: print(sps.csr_matrix((data, indices, indptr), 
+              shape=(3, 3)).toarray())
+Out[33]: [[1 0 2]
+          [0 3 0]
+          [4 5 6]]
+##### end of Listing 6.15 ##### 
+
+##### start of Listing 6.16 ##### 
+import numpy as np
+import scipy.sparse as sps; import scipy.sparse.linalg as spla
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(1, 2, figsize=(9, 4), dpi = 300)
+N = 100
+m = sps.diags([1, -2, 3], [-4, 0, 2], [N, N], format='dok')
+axes[0].spy(m, markersize=1)
+m[63:75:3, 15:39:4] = np.random.randint(10, 20, (4, 6))
+m[80, 40] = 9
+m[26, 60:90:3] = np.random.randint(40, 80, 10)
+axes[1].spy(m, markersize=1)
+
+evals, evecs = spla.eigs(m, k=5, which='LM')
+print(evals.shape, evecs.shape) 
+t = [np.allclose(m.dot(evecs[:,i]), evals[i] * evecs[:,i])
+     for i in range(5)]
+print(np.all(t)) 
+##### end of Listing 6.16 ##### 
+
+##### start of Listing 6.17 ##### 
+import scipy.sparse as sps
+import numpy as np
+import scipy.sparse.linalg as spla
+
+row = np.array([???])
+col = np.array([???])
+data = np.array([???])
+csr1 = sps.csr_matrix((data, (row, col)), shape=(5, 5))
+print(csr1.toarray())
+'''
+[[1 0 2 0 0]
+ [0 0 0 3 0]
+ [0 4 0 0 5]
+ [0 0 6 0 7]
+ [0 0 0 8 9]]
+''' 
+
+indptr = np.array([???])
+indices = np.array([???])
+data = np.array([???])
+csr2 = sps.csr_matrix((data, indices, indptr), shape=(5, 5))
+print(csr2.toarray())
+'''
+[[1 0 2 0 0]
+ [0 0 0 3 0]
+ [0 4 0 0 5]
+ [0 0 6 0 7]
+ [0 0 0 8 9]]
+'''
+
+b = np.array([4, 2, 1, 3, 5])
+print(???(csr2, b))  
+##### end of Listing 6.17 ##### 
+

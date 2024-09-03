@@ -1,0 +1,211 @@
+#  Python关键字
+and  as assert  break  class  continue  def  del  elif  else
+except False finally  for  from  global  if  import  in  is
+lambda  None nonlocal not  or  pass  raise  return  True  try
+with  while  yield
+
+ 
+#  int类型的运算
+In[1]: (32+4)/(23-13)
+Out[1]: 3.6
+In[2]: (32+4)//(23-13)
+Out[2]: 3
+In[3]: (32+4)%(23-13)
+Out[3]: 6
+In[4]: x=379516400906811930638014896080
+In[5]: x**2
+Out[5]: 144032698557259999607886110560755362973171476419973199366400
+In[6]: y=12055735790331359447442538767
+In[7]: 991*y**2
+Out[7]: 144032698557259999607886110560755362973171476419973199366399
+In[8]: Out[7]-Out[5]
+Out[8]: -1
+In[9]: x**2-991*y**2-1
+Out[9]: 0
+In[10]: bin(367), bin(1981)
+Out[10]: ('0b101101111', '0b11110111101')
+In[11]: bin(367 | 1981), bin(367 & 1981), bin(367 ^ 1981)
+Out[11]: ('0b11111111111', '0b100101101', '0b11011010010')
+In[12]: bin(~1981), bin(1981 << 3), bin(1981 >> 3)
+Out[12]: ('-0b11110111110', '0b11110111101000', '0b11110111')
+
+ 
+#  float类型
+In[1]: import sys
+In[2]: sys.float_info
+Out[2]: sys.float_info(max=1.7976931348623157e+308, max_exp=1024,
+        max_10_exp=308, min=2.2250738585072014e-308,
+        min_exp=-1021, min_10_exp=-307, dig=15, mant_dig=53,
+        epsilon=2.220446049250313e-16, radix=2, rounds=1)
+
+ 
+#  float类型的运算
+In[1]: 10000*(1.03)**5
+Out[1]:  11592.740743
+In[2]: (327.6-78.65)/(2.3+0.13)**6
+Out[2]: 1.2091341548676164
+In[3]: 4.5-4.4
+Out[3]: 0.09999999999999964    
+In[4]: import sys; max = sys.float_info.max; max
+Out[4]: 1.7976931348623157e+308
+In[5]: max*1.001
+Out[5]: inf    
+In[6]: sys.float_info.min*0.0000000000000001
+Out[6]: 0    
+In[6]: 1.234567890987654321e38
+Out[6]: 1.2345678909876543e+38   
+In[7]: import numpy as np
+In[8]: (2**(2046-1023))*((1 + sum(0.5**np.arange(1, 53))))
+Out[8]: 1.7976931348623157e+308
+In[9]: (2**(1-1023))*(1+0)
+Out[9]: 2.2250738585072014e-308
+
+ 
+#  complex类型的运算
+In[1]: x = 3 - 5j;
+In[2]: y = -(6 - 21j);
+In[3]: (x+y)/(x - y**2)*(x**3 + y - 3j)
+Out[3]: (-2.7021404738144748-6.422968879823101j)
+In[4]: x.real
+Out[4]: 3.0
+In[5]: x.imag
+Out[5]: -5.0
+In[6]: x.conjugate()
+Out[6]: (3+5j)
+
+ 
+#  数值类型的内置函数
+In[1]: x = -15.6;
+In[2]: y = int(x); y
+Out[2]: -15
+In[3]: type(y)
+Out[3]: int
+In[4]: x=float(y); x
+Out[4]: -15.0
+In[5]: type(x)
+Out[5]: float
+In[6]: z = complex(abs(x),(2 - y)); z
+Out[6]: (15+17j)
+In[7]: abs(z)
+Out[7]: 22.671568097509265
+In[8]: pow(z, 1.28)
+Out[8]: (25.35612170271214+48.0468434395756j)
+In[9]: pow(1.28, z)
+Out[9]: (-20.006681963602528-35.28791909603722j)
+
+ 
+#  求解一元二次方程
+In[1]: import math; a=2; b=6; c=1
+In[2]: r1 = (-b + math.sqrt(b**2 - 4*a*c))/(2*a); r1
+Out[2]: -0.17712434446770464
+In[3]: r2 = (-b - math.sqrt(b**2 - 4*a*c))/(2*a); r2
+Out[3]: -2.8228756555322954
+In[4]: a=2; b = 6; c = 8;
+In[5]: r1 = (-b + math.sqrt(b**2 - 4*a*c))/(2*a); r1
+Out[5]: ValueError: math domain error
+In[6]: import cmath;
+In[7]: r1 = (-b + cmath.sqrt(b**2 - 4*a*c))/(2*a); r1
+Out[7]: (-1.5+1.3228756555322954j)
+In[8]: r2 = (-b - cmath.sqrt(b**2 - 4*a*c))/(2*a); r2
+Out[8]: (-1.5-1.3228756555322954j)
+
+ 
+#  bool类型的运算
+In[1]: year = 1900
+In[2]: (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+Out[2]: False
+In[3]: year = 2020
+In[4]: (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+Out[4]: True
+In[5]: year = 2022
+In[6]: (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+Out[6]: False
+
+ 
+#  list类型的运算
+In[1]: a=[1,3,5,7,9]; b=[2,4,6,8,10]
+In[2]: c=a+b; c
+Out[2]: [1, 3, 5, 7, 9, 2, 4, 6, 8, 10]
+In[3]: c.sort(); c
+Out[3]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+In[4]: d=[a,b]; d
+Out[4]: [[1, 3, 5, 7, 9], [2, 4, 6, 8, 10]]
+In[5]: c[2:10:3]
+Out[5]: [3, 6, 9]
+In[6]: c[-1:-9:-4]
+Out[6]: [10, 6]
+In[7]: d[0][4]
+Out[7]: 9
+In[8]: d[1][0:5:2]=d[0][2:5]; d
+Out[8]: [[1, 3, 5, 7, 9], [5, 4, 7, 8, 9]]
+In[9]: b
+Out[9]: [5, 4, 7, 8, 9]
+
+ 
+#  str类型的运算
+In[1]: a = 'allows embedded "double" quotes'; a
+Out[1]: 'allows embedded "double" quotes'
+In[2]: b = "allows embedded 'single' quotes"; b
+Out[2]: "allows embedded 'single' quotes"
+In[3]: c = """a=[1,3,5,7,9]; b=[2,4,6,8,10]
+  ...: c=a+b
+  ...: c.sort(); c"""
+In[4]: c
+Out[4]: 'a=[1,3,5,7,9]; b=[2,4,6,8,10]\nc=a+b\nc.sort(); c'
+In[5]: d = [a.startswith('allow'), a.startswith('allou')]; d
+Out[5]: [True, False]
+In[6]: e = [a.startswith('embee', 7), a.endswith('quo', 3, -3)]
+Out[6]: [False, True]
+In[7]: f = [a.find('em', 3, 6), a.find('em', 7)]; f
+Out[7]: [-1, 7]
+In[8]: g = '  hello?!!'
+In[9]: h = [g.lstrip(), g.rstrip('!?'), g.strip(' !')]; h
+Out[9]: ['hello?!!', '  hello', 'hello?']
+In[10]: a.replace('e', 'x', 1)
+Out[10]: 'allows xmbedded "double" quotes'
+In[11]: a.replace('e', 'yy', 3)
+Out[11]: 'allows yymbyyddyyd "double" quotes'
+In[12]: a.split('e')
+Out[12]: ['allows ', 'mb', 'dd', 'd "doubl', '" quot', 's']
+
+ 
+#  格式化输出
+In[1]: "%-16.8f" % 345.678987654321012
+Out[1]: '345.67898765    '
+In[2]: "%16.8g" % 3.45678987654321012e34
+Out[2]: '   3.4567899e+34'
+In[3]: "%16X %-16d" % (345678987654, 987654321012)
+Out[3]: '      507C12C186 987654321012    '
+
+ 
+#  set类型的运算
+In[1]: l = [2,3,5,3,9,2,7,8,6,3]; (l, type(l))
+Out[1]: ([2, 3, 5, 3, 9, 2, 7, 8, 6, 3], list)
+In[2]: s = set(l); (s, type(s))
+Out[2]: ({2, 3, 5, 6, 7, 8, 9}, set)
+In[3]: t = set([11, 2, 7, 3, 5, 13])
+In[4]: s.union(t)
+Out[4]: {2, 3, 5, 6, 7, 8, 9, 11, 13}
+In[5]: s.intersection(t)
+Out[5]: {2, 3, 5, 7}
+In[6]: s.difference(t)
+Out[6]: {6, 8, 9}
+
+ 
+#  dict类型的运算
+In[1]: contacts={"Tom":12345, "Jerry":54321, "Mary":23415}
+In[2]: contacts
+Out[2]: {'Tom': 12345, 'Jerry': 54321, 'Mary': 23415}
+In[3]: contacts["Jerry"]=54123; contacts["Betty"]=35421; contacts
+Out[3]: {'Tom': 12345, 'Jerry': 54123, 'Mary': 23415,
+         'Betty': 35421}
+In[4]: contacts.keys()
+Out[4]: dict_keys(['Tom', 'Jerry', 'Mary', 'Betty'])
+In[5]: ['Tommy' in contacts, 'Betty' in contacts]
+Out[5]: [False, True]
+In[6]: (contacts.pop('Jerry'), contacts)
+Out[6]: (54123, {'Tom': 12345, 'Mary': 23415, 'Betty': 35421})
+In[7]: (contacts.pop('Tommy', None), contacts)
+Out[7]: (None, {'Tom': 12345, 'Mary': 23415, 'Betty': 35421})
+
+ 

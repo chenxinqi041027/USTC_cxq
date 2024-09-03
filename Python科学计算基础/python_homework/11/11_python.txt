@@ -1,0 +1,87 @@
+1.
+Code:
+import numpy as np
+from scipy import interpolate; import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, num=21, endpoint = True)
+y = (5*np.sin(3*x/8)+3)*np.cos(-x*x/9)
+xx = np.linspace(x.min(), x.max(), 100)
+f = interpolate.interp1d(x, y, kind = 'cubic')
+plt.scatter(x, y, label = 'data points')
+plt.plot(xx, f(xx), color = 'g', linestyle = '-', label = r'spline of order 3')
+plt.legend()
+
+Running Code:
+In[1]: runfile('C:/Users/28932/Desktop/python/python_homework/10/untitled0.py', wdir='C:/Users/28932/Desktop/python/python_homework/10')
+
+In[2]: 
+
+2.
+Code:
+import numpy as np
+import sympy as sym
+from scipy import optimize as optm
+
+x,y = sym.symbols("x, y")
+f_mat = sym.Matrix([y*sym.sin(x)-4,x*y-x-5])
+j = f_mat.jacobian(sym.Matrix([x,y]))
+
+def f(x):
+    return [x[1]*np.sin(x[0])-4,x[0]*x[1]-x[0]-5]
+
+def f2(x):
+    f_j = np.array([[x[1]*np.cos(x[0]),np.sin(x[0])],[x[1]-1,x[0]]])
+    return f(x),f_j
+
+print(optm.root(f2,[1,1],jac = True,method = 'lm'))
+
+Running Results:
+In[1]: runfile('C:/Users/28932/Desktop/python/python_homework/11.2.py', wdir='C:/Users/28932/Desktop/python/python_homework')
+   cov_x: array([[ 0.29115575, -0.36187165],
+       [-0.36187165,  0.71700028]])
+    fjac: array([[ 3.03562742, -0.99331228],
+       [ 1.53208796, -1.180974  ]])
+     fun: array([-8.8817842e-16,  0.0000000e+00])
+    ipvt: array([1, 2], dtype=int32)
+ message: 'The relative error between two consecutive iterates is at most 0.000000'
+    nfev: 9
+    njev: 7
+     qtf: array([-5.12368932e-11,  5.93037400e-11])
+  status: 2
+ success: True
+       x: array([1.6581955, 4.015326 ])
+
+In[2]: 
+
+3.
+Code:
+import numpy as np
+
+from scipy.integrate import solve_ivp
+
+import matplotlib.pyplot as plt
+
+def f(x):
+    return (49*np.sqrt(2)*np.sin(np.sqrt(2*x))+44*np.cos(np.sqrt(2*x)))/3*np.exp(-x)+4/3
+
+def fvdp2(t,y):
+    y0, y1 = y   
+    dydt = [y1, 2*y1-3*y0+4] 
+    return dydt
+t = np.linspace(0, 10, 1000)
+span = (0,10)
+y0 = [16, 18] 
+y_ = solve_ivp(fvdp2,t_span = span, y0 = y0, t_eval = t)
+plt.scatter(y_.t, y_.y[1,:], label = 'data points')
+plt.plot(t, f(t),'r-', label = 'line')
+plt.legend()
+
+Running Results:
+In[1]: runfile('C:/Users/28932/Desktop/python/python_homework/11.3.py', wdir='C:/Users/28932/Desktop/python/python_homework')
+
+In[2]: 
+
+
+
+
+ 

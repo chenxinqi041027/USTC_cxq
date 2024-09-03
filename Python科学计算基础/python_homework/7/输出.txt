@@ -1,0 +1,10 @@
+import numpy as np; a = np.arrangr(1, 16, 2)**2; a 
+b = a.reshape(2,4); b 
+np.savetxt('D:/Pythom/dat/b.txt', b) 
+c = np.loadtxt('D:/Python/dat/b.txt'); c 
+np.save('D:/Python/dat/b.npy', b) 
+c = np.load('D:/Python/dat/b.npy'); c 
+np.savez('D:/Python/dat/ab.npz') 
+cd = np.load('D:/Python/dat/ab.npz') 
+c = cd['arr_0']; d 
+d = cd['arr_1']; d 

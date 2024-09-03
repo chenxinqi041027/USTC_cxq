@@ -1,0 +1,516 @@
+##### start of Listing 5.1 ##### 
+import math
+class Point2D:
+    def __init__(self, x, y, name=''):
+        self.x = x  
+        self.y = y  
+        self.name = name  
+
+    def move_x(self, delta_x): self.x += delta_x
+
+    def move_y(self, delta_y): self.y += delta_y
+
+    def rotate(self, p, t):
+        xr = self.x - p.x; yr = self.y - p.y
+        x1 = p.x + xr * math.cos(t) - yr * math.sin(t)
+        y1 = p.y + xr * math.sin(t) + yr * math.cos(t)
+        self.x = x1; self.y = y1;
+
+    def distance(self, p):
+        xr = self.x - p.x; yr = self.y - p.y
+        return math.sqrt(xr * xr + yr * yr)
+
+    def __str__(self):
+        if len(self.name) < 1:
+            return '(%g, %g)' % (self.x, self.y)
+        else:
+            return '%s: (%g, %g)' % (self.name, self.x, self.y)
+
+a = Point2D(-5, 2, 'a'); print(a)  
+a.move_x(-1); print(a)             
+a.move_y(2); print(a)              
+b = Point2D(3, 4, 'b');  print(b)  
+print('The distance between a and b is %f' % a.distance(b))
+b.rotate(a, math.pi/2)
+print(a); print(b)     
+a.rotate(b, math.pi)
+print(a); print(b)     
+##### end of Listing 5.1 ##### 
+
+##### start of Listing 5.2 ##### 
+import math
+
+class Complex:
+    def __init__(self, re=0, im=0):
+        if not isinstance(re, (float,int)) or \
+           not isinstance(im, (float,int)):
+            raise TypeError('Error: float or int expected')
+        self.__dict__['re'] = re; self.__dict__['im'] = im
+
+    def __setattr__(self, name, value):
+        raise TypeError('Error: Complex objects are immutable')
+
+    def __str__(self): return '(%g, %g)' % (self.re, self.im)
+
+    def __repr__(self): return 'Complex' + str(self)
+
+    def __abs__(self): return math.hypot(self.re, self.im)
+
+    abs = __abs__
+
+    def angle(self): return math.atan2(self.im, self.re)
+
+    def __add__(self, other):
+        other = to_Complex(other)
+        return Complex(self.re + other.re, self.im + other.im)
+
+    __radd__ = __add__
+
+    def __sub__(self, other):
+        other = to_Complex(other)
+        return Complex(self.re - other.re, self.im - other.im)
+
+    def __rsub__(self, other):
+        other = to_Complex(other)  
+        return other - self  
+
+    def __mul__(self, other):
+        other = to_Complex(other)
+        return Complex(self.re*other.re - self.im*other.im,
+                       self.re*other.im + self.im*other.re)
+
+    __rmul__ = __mul__
+
+    def __truediv__(self, other):
+        other = to_Complex(other)
+        d = float(other.re*other.re + other.im*other.im)
+        if is_zero(d): 
+            raise ZeroDivisionError('Error: division by 0')
+        return Complex((self.re*other.re + self.im*other.im) / d,
+                       (self.im*other.re - self.re*other.im) / d)
+
+    def __rtruediv__(self, other):
+        other = to_Complex(other)  
+        return other / self  
+
+    def __pow__(self, n):
+        if is_Complex(n):  
+           if not is_zero(n.im):  
+               if is_zero(self.im):  
+                   z = n * math.log(self.re)
+                   r = math.exp(z.re)
+                   return Complex(r * math.cos(z.im),
+                                  r * math.sin(z.im))
+               else: 
+                   raise NotImplementedError('(a+bi)^(c+di)')
+           n = n.re  
+        r = self.abs() ** n
+        phi = n * self.angle()
+        return Complex(r * math.cos(phi), r * math.sin(phi))
+
+    def __rpow__(self, base):
+        base = to_Complex(base)  
+        return pow(base, self)
+
+def is_zero(x, tol = 1e-15): return abs(x) < tol
+
+def is_Complex(obj):
+    return hasattr(obj, 're') and hasattr(obj, 'im')
+
+def to_Complex(obj):
+    if is_Complex(obj):
+        return obj  
+    elif isinstance(obj, tuple):  
+        if len(obj) <= 2:  
+            return Complex(*obj)  
+        else:
+            raise TypeError('Error: <= 2 numbers expected')
+    else:
+        return Complex(obj)
+
+def polar_to_Complex(r = 0, phi = 0):
+    return Complex(r * math.cos(phi), r * math.sin(phi))
+
+def Re(obj):
+    return obj.re if is_Complex(obj) else obj
+
+def Im(obj):
+    return obj.im if is_Complex(obj) else 0
+
+def check(expr, a, b, value, verbose = False, rel_tol = 1e-6):
+    if verbose: print('       ', a, 'and', b, end = '')
+    try:
+        result = eval(expr)
+    except: 
+        print('Error in evaluating ' + expr); return
+
+    if verbose: print(' -> ', result)
+    rel_err = abs(result - value) / abs(value)
+    if rel_err > rel_tol:
+        print('%s for a=%s and b=%s = %s' % (expr, a, b, result))
+        print('    Correct value = %s  Relative error = %f' %
+               (value, rel_err))
+
+def test(verbose):
+    testsuite = {
+            'a+b': [ (Complex(0, 3), 2, Complex(2, 3)),
+                     (2, Complex(0, 3), Complex(2, 3)),
+                     (Complex(2,-3), Complex(-4,5),
+                      Complex(-2,2)) ],
+            'a-b': [ (Complex(0, 3), 2, Complex(-2, 3)),
+                     (2, Complex(0, 3), Complex(2, -3)),
+                     (Complex(2,-3), Complex(-4,5),
+                      Complex(6,-8)) ],
+            'a*b': [ (Complex(0, 3), 2, Complex(0, 6)),
+                     (2, Complex(0, 3), Complex(0, 6)),
+                     (Complex(2,-3), Complex(-4,5),
+                      Complex(7,22)) ],
+            'a/b': [ (Complex(0, 3), 2, Complex(0, 1.5)),
+                     (2, Complex(0, 3), Complex(0, -0.6666667)),
+                     (Complex(2, -3), Complex(-4, 5),
+                      Complex(-0.5609756, 0.04878049)) ],
+            'pow(a,b)': [ (Complex(2, -3), 2.3,
+                           Complex(-12.15244, -14.73536)),
+                           (2.3, Complex(2, -3),
+                            Complex(-4.234017, -3.171309)) ],
+            'polar_to_Complex(a.abs(), a.angle())': [
+                    (Complex(0, -3), 0, Complex(0, -3)),
+                    (Complex(2, -3), 0, Complex(2, -3)),
+                    (Complex(-1, -3), 0, Complex(-1, -3)) ]
+    }
+    for expr in testsuite:
+        if verbose: print(expr + ':')
+        t = (expr,)
+        for item in testsuite[expr]:
+            check(*(t + item), verbose)
+
+if __name__ == '__main__':
+    verbose = False
+    test(verbose)
+##### end of Listing 5.2 ##### 
+
+##### start of Listing 5.3 ##### 
+tol = 1E-15
+class Polynomial:
+    def __init__(self, poly):
+        self.poly = {}
+        for power in poly:
+            if abs(poly[power]) > tol:
+                self.poly[power] = poly[power]
+
+    def __call__(self, x):
+        value = 0.0
+        for power in self.poly:
+            value += self.poly[power]*x**power
+        return value
+
+    def __add__(self, other):
+        sum = self.poly.copy()   
+        for power in other.poly:
+            if power in sum:
+                sum[power] += other.poly[power]
+            else:
+                sum[power] = other.poly[power]
+        return Polynomial(sum) 
+
+    def __mul__(self, other):
+        sum = {}
+        for self_power in self.poly:
+            for other_power in other.poly:
+                power = self_power + other_power
+                m = self.poly[self_power] * \
+                    other.poly[other_power]
+                if power in sum:
+                    sum[power] += m
+                else:
+                    sum[power] = m
+        return Polynomial(sum)  
+
+    def __str__(self):
+        s = ''
+        for power in sorted(self.poly):
+            s += ' + %g*x^%d' % (self.poly[power], power)
+        s = s.replace('+ -', '- ')
+        s = s.replace('x^0', '1')
+        s = s.replace(' 1*', ' ')
+        s = s.replace('x^1 ', 'x ')
+        
+        if s[0:3] == ' + ':  
+            s = s[3:]
+        if s[0:3] == ' - ':  
+            s = '-' + s[3:]
+        return s
+
+p1 = Polynomial({0: -1, 2: 1, 7: 3}); print(p1)
+p2 = Polynomial({0: 1, 2: -1, 5: -2, 3: 4}); print(p2)
+p3 = p1 + p2; print(p3)
+p4 = p1 * p2; print(p4)
+print(p4(5))   
+##### end of Listing 5.3 ##### 
+
+##### start of Listing 5.4 ##### 
+class Differentiation:
+    def __init__(self, f, h=1E-5, dfdx_exact=None):
+        self.f = f
+        self.h = float(h)
+        self.exact = dfdx_exact
+
+    def get_error(self, x):  
+        if self.exact is not None:
+            df_numerical = self(x)
+            df_exact = self.exact(x)
+            return abs( (df_exact - df_numerical) / df_exact )
+
+class Forward1(Differentiation):  
+    def __call__(self, x):
+        f, h = self.f, self.h
+        return (f(x+h) - f(x))/h
+
+class Backward1(Differentiation):  
+    def __call__(self, x):
+        f, h = self.f, self.h
+        return (f(x) - f(x-h))/h
+
+class Central2(Differentiation):  
+    def __call__(self, x):
+        f, h = self.f, self.h
+        return (f(x+h) - f(x-h))/(2*h)
+
+class Central4(Differentiation):  
+    def __call__(self, x):
+        f, h = self.f, self.h
+        return (4./3)*(f(x+h) - f(x-h))  /(2*h) - \
+               (1./3)*(f(x+2*h) - f(x-2*h))/(4*h)
+
+def table(f, x, h_values, methods, dfdx=None):
+    print('%-10s' % 'h', end=' ')
+    for h in h_values: print('%-8.2e' % h, end=' ')
+    print()
+    for method in methods:
+        print('%-10s' % method.__name__, end=' ')
+        for h in h_values:
+            if dfdx is not None:
+                d = method(f, h, dfdx)
+                output = d.get_error(x)
+            else:
+                d = method(f, h)
+                output = d(x)
+            print('%-8.6f' % output, end=' ')
+        print()
+
+import math
+def g(x): return math.exp(x*math.sin(x))
+
+import sympy as sym
+sym_x = sym.Symbol('x')  
+sym_gx = sym.exp(sym_x*sym.sin(sym_x)) 
+sym_dgdx = sym.diff(sym_gx, sym_x) 
+dgdx = sym.lambdify([sym_x], sym_dgdx) 
+
+table(f=g, x=-0.65, h_values=[10**(-k) for k in range(1, 7)],
+      methods=[Forward1, Central2, Central4], dfdx=dgdx)
+##### end of Listing 5.4 ##### 
+
+##### start of Listing 5.5 ##### 
+h          1.00e-01 1.00e-02 1.00e-03 1.00e-04 1.00e-05 1.00e-06
+Forward1   0.104974 0.010906 0.001095 0.000110 0.000011 0.000001
+Central2   0.004611 0.000046 0.000000 0.000000 0.000000 0.000000
+Central4   0.000080 0.000000 0.000000 0.000000 0.000000 0.000000
+##### end of Listing 5.5 ##### 
+
+##### start of Listing 5.6 ##### 
+class Parent:
+    def __init__(self):
+        self.c = 1
+    def m(self):
+        print('Calling m in class Parent')
+	
+class Child1(Parent):
+    def __init__(self):  
+        super().__init__()  
+        self.d = 2
+    def m(self):  
+        print('Calling m in class Child1')
+	
+class Child2(Parent):
+    def m(self):  
+        super().m()  
+        print('Calling m in class Child2')
+
+class Child3(Parent):
+    def __init__(self):  
+        self.f = 3
+    def m2(self):
+        print('Calling m2 in class Child3')	
+	
+c1 = Child1()           
+c2 = Child2()           
+c3 = Child3()           
+p = Parent()            
+c1.m()                  
+c2.m()                  
+c3.m()                  
+p.m()                   
+print(c1.__dict__)      
+print(c2.__dict__)      
+print(c3.__dict__)      
+##### end of Listing 5.6 ##### 
+
+##### start of Listing 5.7 ##### 
+class Fibonacci:
+    def __init__(self, ub):
+        self.a = 0; self.b = 1; self.ub = ub
+
+    def __next__(self):  
+        self.a, self.b = self.b, self.a + self.b
+        if self.a > self.ub:  
+            raise StopIteration
+        return self.a
+
+class FibonacciIterator:
+    def __init__(self, ub):
+        self.ub = ub
+
+    def __iter__(self):
+        return Fibonacci(self.ub)
+
+fibonacciIterator = FibonacciIterator(64)
+for f in fibonacciIterator:
+    print (f, end = ' ')       
+print()
+print(list(fibonacciIterator))
+##### end of Listing 5.7 ##### 
+
+##### start of Listing 5.8 ##### 
+def flatten(nested_list):
+    if not isinstance(nested_list, list):
+        yield nested_list
+    else:
+        for sub_list in nested_list:
+            for element in flatten(sub_list):
+                yield element
+
+l = [1, [2, [3, 4, 5, [6, 7]], 8], 9]
+for e in flatten(l):
+    print (e, end = ' ')  
+print()
+print(list(flatten(l)))  
+##### end of Listing 5.8 ##### 
+
+##### start of Listing 5.9 ##### 
+def gcd(a, b):  
+    while a != b:
+        if a > b:
+            a -= b
+        else:
+            b -= a
+    return a
+
+class Rational:
+    def __init__(self, n=0, d=1):  
+        
+        _nu = n; _de = d
+        self.__dict__['nu'] = _nu; self.__dict__['de'] = _de
+
+    def __setattr__(self, name, value):
+        raise TypeError('Error: Rational objects are immutable')
+
+    def __str__(self): return '%d/%d' % (self.nu, self.de)
+
+    def __add__(self, other):  
+
+    def __sub__(self, other):  
+
+    def __mul__(self, other):  
+
+    def __truediv__(self, other):  
+
+    def __eq__(self, other):  
+
+    def __ne__(self, other):  
+
+    def __gt__(self, other):  
+
+    def __lt__(self, other):  
+
+    def __ge__(self, other):  
+
+    def __le__(self, other):  
+
+def test():
+    testsuite = [
+        ('Rational(2, 3) + Rational(-70, 40)',
+          Rational(-13, 12)),
+        ('Rational(-20, 3) - Rational(120, 470)',
+          Rational(-976,141)),
+        ('Rational(-6, 19) * Rational(-114, 18)',
+          Rational(2, 1)),
+        ('Rational(-6, 19) / Rational(-114, -28)',
+          Rational(-28,361)),
+
+        ('Rational(-6, 19) == Rational(-14, 41)', False),
+        ('Rational(-6, 19) != Rational(-14, 41)', True),
+        ('Rational(6, -19) > Rational(14, -41)', True),
+        ('Rational(-6, 19) < Rational(-14, 41)', False),
+        ('Rational(-6, 19) >= Rational(-14, 41)', True),
+        ('Rational(6, -19) <= Rational(14, -41)', False),
+        ('Rational(-15, 8) == Rational(120, -64)', True),
+    ]
+    for t in testsuite:
+        try:
+            result = eval(t[0])
+        except:
+            print('Error in evaluating ' + t[0]); continue
+
+        if result != t[1]:
+            print('Error:  %s != %s' % (t[0], t[1]))
+
+if __name__ == '__main__':
+    test()
+##### end of Listing 5.9 ##### 
+
+##### start of Listing 5.10 ##### 
+import math
+
+class Integrator:
+    def __init__(self, a, b, n):
+        self.a, self.b, self.n = a, b, n
+        self.points, self.weights = self.compute_points()
+
+    def compute_points(self):
+        raise NotImplementedError(self.__class__.__name__)
+
+    def integrate(self, f):  
+    
+
+class Trapezoidal(Integrator):
+    def compute_points(self):  
+
+class Simpson(Integrator):
+    def compute_points(self):  
+
+class GaussLegendre(Integrator):
+    def compute_points(self):  
+
+def test():
+    def f(x): return (x * math.cos(x) + math.sin(x)) * \
+                      math.exp(x * math.sin(x))
+    def F(x): return math.exp(x * math.sin(x))
+
+    a = 2; b = 3; n = 200
+    I_exact = F(b) - F(a)
+    tol = 1E-3
+
+    methods = [Trapezoidal, Simpson, GaussLegendre]
+    for method in methods:
+        integrator = method(a, b, n)
+        I = integrator.integrate(f)
+        rel_err = abs((I_exact - I) / I_exact)
+        print('%s: %g' % (method.__name__, rel_err))
+        if rel_err > tol:
+            print('Error in %s' % method.__name__)
+
+if __name__ == '__main__':
+    test()
+##### end of Listing 5.10 ##### 
+

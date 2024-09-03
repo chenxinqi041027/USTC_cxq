@@ -1,0 +1,26 @@
+程序7.21
+In[1]: import numpy as np; a = np.arrangr(1, 16, 2)**2; a
+Out[1]: array([1, 9, 25, 49, 81, 121, 169, 225],
+		dtype=int32)
+In[2]: b = a.reshape(2,4); b
+Out[2]:
+array([[1, 9, 25, 49],
+	[81, 121, 169, 225]],dtype=int32)
+In[3]: np.savetxt('D:/Pythom/dat/b.txt', b)
+In[4]: c = np.loadtxt('D:/Python/dat/b.txt'); c
+Out[4]:
+array([[1., 9., 25., 49],
+	[81., 121., 169., 225.]])
+In[5]: np.save('D:/Python/dat/b.npy', b)
+In[6]: c = np.load('D:/Python/dat/b.npy'); c
+Out[6]:
+array([[1, 9, 25, 49],
+	[81, 121, 169, 225]])
+In[7]: np.savez('D:/Python/dat/ab.npz')
+In[8]: cd = np.load('D:/Python/dat/ab.npz')
+In[9]: c = cd['arr_0']; d
+Out[9]: array([1, 9, 25, 49, 81, 121, 169, 225])
+In[10]: d = cd['arr_1']; d
+Out[10]:
+array([[1, 9, 25, 49],
+	[81, 121, 169, 225]])

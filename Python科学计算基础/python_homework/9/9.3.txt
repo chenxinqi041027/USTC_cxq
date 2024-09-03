@@ -1,0 +1,35 @@
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import numpy as np
+
+def title_and_labels(ax, title):
+    ax.set_title(title); ax.set_xlabel("$x$")
+    ax.set_ylabel("$y$"); ax.set_zlabel("$z$")
+
+fig, axes = plt.subplots(2, 2, figsize=(6, 6),
+                         subplot_kw={'projection': '3d'})
+
+x = y = np.linspace(-3, 3, 100)
+X, Y = np.meshgrid(x, y)
+Z = (3*X*X*X-2*X+4*X*X*Y+2*Y*Y)*np.exp(-X*X-Y*Y)
+
+norm = mpl.colors.Normalize(vmin = Z.min(), vmax = Z.max())
+p = axes[0, 0].plot_surface(X, Y, Z, linewidth=0, rcount=20,
+                            ccount=20, norm=norm,
+                            cmap=mpl.cm.hot)
+cb = fig.colorbar(p, ax=axes[0, 0], pad=0.1, shrink = 0.6)
+title_and_labels(axes[0, 0], "surface plot")
+
+cset = axes[1, 0].contour(X, Y, Z, zdir='x', levels = 20,
+                          norm=norm, cmap=mpl.cm.hot)
+title_and_labels(axes[1, 0], "contour x")
+
+cset = axes[1, 1].contour(X, Y, Z, zdir='y', levels = 20,
+                          norm=norm, cmap=mpl.cm.hot)
+title_and_labels(axes[1, 1], "contour y")
+
+cset = axes[0, 1].contour(X, Y, Z, zdir='z', levels = 20,
+                          norm=norm, cmap=mpl.cm.hot)
+title_and_labels(axes[1, 1], "contour z")
+
+fig.tight_layout(); plt.show()

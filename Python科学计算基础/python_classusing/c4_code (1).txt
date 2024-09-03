@@ -1,0 +1,605 @@
+##### start of Listing 4.1 ##### 
+def gcd(a, b):
+    while a != b:
+        if a > b:
+           a -= b;
+        else:
+           b -= a;
+    return a
+
+print(gcd(156, 732))  
+print(gcd(1280, 800))  
+##### end of Listing 4.1 ##### 
+
+##### start of Listing 4.2 ##### 
+def max_min(a, b):
+    if a > b:
+        return a, b
+    else:
+        return b, a
+
+print(max_min(156, 34))  
+print(max_min(12, 800))  
+##### end of Listing 4.2 ##### 
+
+##### start of Listing 4.3 ##### 
+b = 10
+c = 15
+def f(a):
+    b = 20
+    return a + b + c
+print(f(5))  
+print('b = %d' % b)  
+##### end of Listing 4.3 ##### 
+
+##### start of Listing 4.4 ##### 
+b = 10
+c = 15
+def f(a):
+    global b
+    b = 20
+    return a + b + c
+print(f(5))  
+print('b = %d' % b)  
+##### end of Listing 4.4 ##### 
+
+##### start of Listing 4.5 ##### 
+import math
+def get_primes(lb, ub=100):
+    primes = []
+    if lb % 2 == 0: lb += 1
+    if ub % 2 == 0: ub -= 1
+    for i in range(lb, ub + 1, 2):
+        isPrime = True
+        for j in range(2, math.ceil(math.sqrt(i)) + 1):
+            if i % j == 0:
+                isPrime = False
+                break
+        if isPrime: primes.append(i)
+    return primes
+
+print(get_primes(40, 50))  
+print(get_primes(120, 140))  
+print(get_primes(80))  
+print(get_primes(ub=150, lb=136))  
+##### end of Listing 4.5 ##### 
+
+##### start of Listing 4.6 ##### 
+def fun(*args, **kwargs):
+    print(type(args), type(kwargs))
+    print('The positional arguments are', args)
+    print('The keyword arguments are', kwargs)
+
+fun(1, 2.3, 'a', True, u=6, x='Python', f=3.1415)
+##### end of Listing 4.6 ##### 
+
+##### start of Listing 4.7 ##### 
+In[1]: animals = ["elephant", "tiger", "rabbit", "goat", "dog",
+                  "penguin"]
+In[2]: sorted(animals)
+Out[2]: ['dog', 'elephant', 'goat', 'penguin', 'rabbit', 'tiger']
+In[3]: sorted(animals, key=len)
+Out[3]: ['dog', 'goat', 'tiger', 'rabbit', 'penguin', 'elephant']
+In[4]: sorted(animals, key=len, reverse=True)
+Out[4]: ['elephant', 'penguin', 'rabbit', 'tiger', 'goat', 'dog']
+In[5]: def m1(s): return ord(min(s))
+In[6]: sorted(animals, key=m1)
+Out[6]: ['elephant', 'rabbit', 'goat', 'dog', 'tiger', 'penguin']
+In[7]: def m2(s): return ord(min(s)), len(s)
+In[8]: sorted(animals, key=m2)
+Out[8]: ['goat', 'rabbit', 'elephant', 'dog', 'tiger', 'penguin']
+##### end of Listing 4.7 ##### 
+
+##### start of Listing 4.8 ##### 
+def map_fs(f, s):
+    for i in range(len(s)): s[i] = f(s[i])
+    return s
+
+a = [1, 3, 5, 7, 9]
+print(map_fs(lambda x: x+1, a))  
+print(map_fs(lambda x: x*x-1, a))  
+##### end of Listing 4.8 ##### 
+
+##### start of Listing 4.9 ##### 
+In[1]: animals = ["elephant", "tiger", "rabbit", "goat", "dog",
+                  "penguin"]
+In[2]: def reverse(s): return s[::-1]
+In[3]: list(map(reverse, animals))
+Out[3]: ['tnahpele', 'regit', 'tibbar', 'taog', 'god', 'niugnep']
+In[4]: def m2(s): return ord(min(s)), len(s)
+In[5]: list(map(m2, animals))
+Out[5]: [(97, 8), (101, 5), (97, 6), (97, 4), (100, 3), (101, 7)]
+In[6]: def f(a, b, c): return a + b + c
+In[7]: list(map(f, [1, 2, 3], [10, 20, 30], [100, 200, 300]))
+Out[7]: [111, 222, 333]
+In[8]: nums = {25, 18, 91, 365, 12, 78, 59}
+In[9]: def r3(n): return n % 3 == 0
+In[10]: list(filter(r3, nums))
+Out[10]: [12, 78, 18]
+##### end of Listing 4.9 ##### 
+
+##### start of Listing 4.10 ##### 
+def key_fun(n):
+    def m1(s): return ord(min(s))
+    def m2(s): return ord(min(s)), len(s)
+
+    ms = [None, len, m1, m2]
+    return ms[n]
+
+animals = ["elephant", "tiger", "rabbit", "goat", "dog",
+           "penguin"]
+for i in range(4):
+    print(sorted(animals, key=key_fun(i)))
+##### end of Listing 4.10 ##### 
+
+##### start of Listing 4.11 ##### 
+['dog', 'elephant', 'goat', 'penguin', 'rabbit', 'tiger']
+['dog', 'goat', 'tiger', 'rabbit', 'penguin', 'elephant']
+['elephant', 'rabbit', 'goat', 'dog', 'tiger', 'penguin']
+['goat', 'rabbit', 'elephant', 'dog', 'tiger', 'penguin']
+##### end of Listing 4.11 ##### 
+
+##### start of Listing 4.12 ##### 
+def factorial(n):
+    if n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
+
+print(factorial(10))  
+##### end of Listing 4.12 ##### 
+
+##### start of Listing 4.13 ##### 
+def gcd(a, b):
+    if a == b:
+        return a
+    elif a > b:
+        return gcd(a-b, b)
+    else:
+        return gcd(a, b-a)
+
+print(gcd(156, 732))  
+##### end of Listing 4.13 ##### 
+
+##### start of Listing 4.14 ##### 
+def reverse(s):
+    if len(s) == 1:
+        return s
+    else:
+        return s[-1] + reverse(s[ : -1])
+
+print(reverse("ABCDE"))  
+##### end of Listing 4.14 ##### 
+
+##### start of Listing 4.15 ##### 
+def qsort(s):
+    if len(s) <= 1: return s
+    s_less = []; s_greater = []; s_equal = []
+    for k in s:
+        if k < s[0]:
+            s_less.append(k)
+        elif k > s[0]:
+            s_greater.append(k)
+        else:
+            s_equal.append(k)
+    return qsort(s_less) + s_equal + qsort(s_greater)
+
+print(qsort([3, 6, 2, 9, 7, 3, 1, 8])) 
+##### end of Listing 4.15 ##### 
+
+##### start of Listing 4.16 ##### 
+def F(n):
+    if n <= 1:
+        return 1
+    return F(n-1) + F(n-2)
+
+def F_memoization(n):
+    v = [-1] * (n+1); v[0] = 1; v[1] = 1
+    def F(n):
+        if v[n] > -1:
+            return v[n]
+        v[n] = F(n-1) + F(n-2)
+        return v[n]
+    return F(n)
+
+def F_iteration1(n):
+    v = [-1] * (n + 1); v[0] = 1; v[1] = 1
+    for i in range(2, n+1):
+        v[i] = v[i-1] + v[i-2]
+    return v[n]
+
+def F_iteration2(n):
+    if n <= 1:
+        return 1
+    a = 1; b = 1
+    for i in range(2, n+1):
+        c = a + b; a = b; b = c
+    return c
+
+n = 19
+print(F(n), F_memoization(n), F_iteration1(n), F_iteration2(n))
+##### end of Listing 4.16 ##### 
+
+##### start of Listing 4.17 ##### 
+def knapsack(weights, values, c0):
+    n = len(weights)
+    selects = [[False]*(c0+1) for i in range(n+1)]
+    def ks(k, c):
+        if k == 0 or c == 0: return 0
+        exclude_k = ks(k-1, c)
+        if weights[k-1] > c: return exclude_k
+        select_k = values[k-1] + ks(k - 1, c - weights[k-1])
+        if exclude_k > select_k:
+            return exclude_k
+        else:
+            selects[k][c] = True
+            return select_k
+    return ks(n, c0), get_items(n, c0, weights, selects)
+
+def get_items(k, c, weights, selects):
+    items = set()
+    while k > 0 and c > 0:
+        if selects[k][c]:
+            items.add(k-1); c -= weights[k-1]
+        k -= 1
+    return items
+
+def knapsack_iteration(weights, values, c0):
+    n = len(weights)
+    ks = [[0]*(c0+1) for i in range(n+1)]
+    selects = [[False]*(c0+1) for i in range(n+1)]
+    for k in range(1, n+1):
+        for c in range(1, c0+1):
+            exclude_k = ks[k-1][c]
+            if weights[k-1] > c:
+                ks[k][c] = ks[k-1][c]
+                continue
+            select_k = values[k-1] + ks[k - 1][c - weights[k-1]]
+            if exclude_k > select_k:
+                ks[k][c] = exclude_k
+            else:
+                selects[k][c] = True
+                ks[k][c] = select_k
+    import pprint; pprint.pprint(ks)
+    return ks[n][c0], get_items(n, c0, weights, selects)
+
+weights = [2,1,3,2]; values = [12,10,20,15]; c0=5
+print(knapsack(weights, values, c0))  
+print(knapsack_iteration(weights, values, c0)) 
+'''
+[[0, 0, 0, 0, 0, 0],
+ [0, 0, 12, 12, 12, 12],
+ [0, 10, 12, 22, 22, 22],
+ [0, 10, 12, 22, 30, 32],
+ [0, 10, 15, 25, 30, 37]]
+'''
+##### end of Listing 4.17 ##### 
+
+##### start of Listing 4.18 ##### 
+def matrix_chain(r):
+    n = len(r) - 2
+    mcm_value = [[0]*(n+1) for i in range(n+1)]
+    k_value = [[0]*(n+1) for i in range(n+1)]
+    def mcm(i, j):
+        if i == j: return 0
+        if mcm_value[i][j] > 0: return mcm_value[i][j]
+        min_cost = mcm(i, j-1) + r[i] * r[j] * r[j+1]
+        k_min_cost = j-1
+        for k in range(i, j-1):
+            cost = mcm(i, k) + mcm(k+1, j) + \
+                   r[i] * r[k+1] * r[j+1]
+            if cost < min_cost:
+                min_cost = cost
+                k_min_cost = k
+        mcm_value[i][j] = min_cost
+        k_value[i][j] = k_min_cost
+        return min_cost
+    return mcm(1, n), get_mcm_str(n, k_value)
+
+def get_mcm_str(n, k_value):
+    def mcm_str(i, j):
+        if i == j: return 'A%d' % i
+        k = k_value[i][j]
+        return '(%s%s)' % (mcm_str(i, k), mcm_str(k+1, j))
+    return mcm_str(1, n)
+
+def matrix_chain_iteration(r):
+    n = len(r) - 2
+    mcm_value = [[0]*(n+1) for i in range(n+1)]
+    k_value = [[0]*(n+1) for i in range(n+1)]
+    for i in range(1, n+1):
+        mcm_value[i][i] = 0
+    for l in range(2, n+1):
+        for i in range(1, n-l+2):
+            j = i + l - 1
+            min_cost = mcm_value[i][j-1] + r[i] * r[j] * r[j+1]
+            k_min_cost = j-1
+            for k in range(i, j-1):
+                cost = mcm_value[i][k] + mcm_value[k+1][j] + \
+                       r[i] * r[k+1] * r[j+1]
+                if cost < min_cost:
+                    min_cost = cost
+                    k_min_cost = k
+            mcm_value[i][j] = min_cost
+            k_value[i][j] = k_min_cost
+    return mcm_value[1][n], get_mcm_str(n, k_value)
+
+rs = [0, 30, 35, 15, 5, 10, 20, 25]
+print(matrix_chain(rs))  
+print(matrix_chain_iteration(rs)) 
+##### end of Listing 4.18 ##### 
+
+##### start of Listing 4.19 ##### 
+"""
+Module for printing the monthly calendar for the year and
+the month specified by the user.
+	
+For example, given year 2022 and month 9, the module prints
+the monthly calendar of September 2022.
+
+>>> run month_calendar.py --year 2022 --month 9
+2022  9
+---------------------------
+Sun Mon Tue Wed Thu Fri Sat
+                1   2   3
+4   5   6   7   8   9   10
+11  12  13  14  15  16  17
+18  19  20  21  22  23  24
+25  26  27  28  29  30
+"""
+
+import sys, math
+
+def is_leap(year):
+    return (year % 4 == 0 and year % 100 != 0) or year % 400 == 0
+
+def test____is_leap():
+    d = {1900:False, 2000:True, 2020:True, 2022:False}
+    for y in d.keys():  
+        if is_leap(y) != d[y]:  
+            print("test failed: is_leap(%d) != %s" % (y, d[y]))
+
+def get_0101_in_week(year):
+    return (year + math.floor((year - 1) / 4) -
+            math.floor((year - 1) / 100) +
+            math.floor((year - 1) / 400)) % 7
+
+def test____get_0101_in_week():
+    d = {2008:2, 2014:3, 2021:5, 2022:6}
+    for y in d.keys():
+        if d[y] != get_0101_in_week(y):
+            print("test failed: get_0101_in_week(%d) != %s"
+                  % (y, d[y]))
+
+month_days = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30,
+              7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
+def get_num_days_in_month(year, month):
+    n = month_days[month]
+    if month == 2 and is_leap(year):
+        return n + 1
+    return n
+
+def get_num_days_from_0101_to_m01(year, month):
+    n = 0
+    for i in range(1, month):
+        n += get_num_days_in_month(year, i)
+    return n
+
+def get_m01_in_week(year, month):
+    n1 = get_0101_in_week(year)
+    n2 = get_num_days_from_0101_to_m01(year, month)
+    n = (n1 + n2) % 7
+    return n
+
+def test____get_m01_in_week():
+    d = {(2022, 6):3, (2019, 10):2, (2016, 5):0, (2011, 7):5}
+    for y in d.keys():
+        if d[y] != get_m01_in_week(y[0], y[1]):
+            print("test failed: get_m01_in_week(%s) != %s"
+                  % (y, d[y]))
+
+def print_header(year, month):
+    print("%d  %d " % (year, month))
+    print("---------------------------")
+    print("Sun Mon Tue Wed Thu Fri Sat")
+
+def print_body(year, month):
+    n = get_m01_in_week(year, month)
+    print(n * 4 * ' ', end='')
+    for i in range(1, get_num_days_in_month(year, month) + 1):
+        print('%-04d' % i, end='')
+        if (i + n) % 7 == 0: print()
+
+def print_monthly_calendar(year, month):
+    print_header(year, month)
+    print_body(year, month)
+
+def test_all_functions():
+    test____is_leap()
+    test____get_0101_in_week()
+    test____get_m01_in_week()
+
+if __name__ == '__main__':  
+    if len(sys.argv) == 1:
+        print(__doc__)  
+    elif len(sys.argv) == 2 and sys.argv[1] == '-h':
+        print(__doc__)  
+    elif len(sys.argv) == 2 and sys.argv[1] == 'test':
+        test_all_functions()  
+    else:
+        import argparse  
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--year', type=int, default=2022)
+        parser.add_argument('--month', type=int, default=1)
+        args = parser.parse_args()
+        year = args.year; month = args.month
+        print_monthly_calendar(year, month) 
+##### end of Listing 4.19 ##### 
+
+##### start of Listing 4.20 ##### 
+In[1]: cd D:\Python\src
+Out[1]: D:\Python\src
+In[2]: run month_calendar.py --year 2022 --month 10
+2022  10
+---------------------------
+Sun Mon Tue Wed Thu Fri Sat
+                        1
+2   3   4   5   6   7   8
+9   10  11  12  13  14  15
+16  17  18  19  20  21  22
+23  24  25  26  27  28  29
+30  31
+##### end of Listing 4.20 ##### 
+
+##### start of Listing 4.21 ##### 
+import month_calendar
+y, m, d = 2022, 9, 18
+n = (month_calendar.get_m01_in_week(y, m) + d - 1) % 7
+dw = "Sun Mon Tue Wed Thu Fri Sat"
+print(dw[4*n:4*n+4])  
+##### end of Listing 4.21 ##### 
+
+##### start of Listing 4.22 ##### 
+In[1]: run ymd.py
+Out[1]: ... ModuleNotFoundError: No module named 'month_calendar'
+In[2]: import sys; sys.path.insert(0, 'D:\Python\src')
+In[3]: run ymd.py
+Sun
+##### end of Listing 4.22 ##### 
+
+##### start of Listing 4.23 ##### 
+def get_num_days_from_0101_to_m01_remainder():
+    n = 0; r = [0]
+    for i in range(1, 12):
+        n += get_num_days_in_month(2022, i)
+        r.append(n % 7)
+    print(r) 
+
+def get_m01_in_week_precomputed(year, month):
+    r = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5]
+    n1 = get_0101_in_week(year)
+    n2 = r[month-1];
+    if (is_leap(year)) and month > 2:
+        n2 += 1
+    n = (n1 + n2) % 7
+    return n
+##### end of Listing 4.23 ##### 
+
+##### start of Listing 4.24 ##### 
+from calendar import TextCalendar
+tc = TextCalendar()
+print(tc.formatmonth(2022, 10))
+print(tc.formatyear(2022, m=4))
+##### end of Listing 4.24 ##### 
+
+##### start of Listing 4.25 ##### 
+def is_sorted(s):  
+
+def qsort(s):  
+    if len(s) <= 1: return s
+    s_less = []; s_greater = []; s_equal = []
+    for k in s:
+        if k < s[0]:
+            s_less.append(k)
+        elif k > s[0]:
+            s_greater.append(k)
+        else:
+            s_equal.append(k)
+    return qsort(s_less) + s_equal + qsort(s_greater)
+
+def binary_search(s, low, high, k):  
+
+s = [5, 6, 21, 32, 51, 60, 67, 73, 77, 99]
+if not is_sorted(s):
+    s = qsort(s)
+    print(s)
+
+print(binary_search(s, 0, len(s) - 1, 5))  
+print(binary_search(s, 0, len(s) - 1, 31)) 
+print(binary_search(s, 0, len(s) - 1, 99)) 
+print(binary_search(s, 0, len(s) - 1, 64)) 
+print(binary_search(s, 0, len(s) - 1, 51)) 
+##### end of Listing 4.25 ##### 
+
+##### start of Listing 4.26 ##### 
+def F(n):
+    if n <= 1:
+        return 1
+    return F(n-1) + F(n-2)
+
+F(10)
+##### end of Listing 4.26 ##### 
+
+##### start of Listing 4.27 ##### 
+"""
+Module for performing arithmetic operations for rational numbers.
+
+To run the module, user needs to supply three named parameters:
+1. op stands for the operation:
+    add for addition
+    sub for subtraction
+    mul for multiplication
+    div for division
+2. x stands for the first operand
+3. y stands for the second operand
+
+x and y must be enclosed in paired parentheses.
+
+For example:
+
+>>> run rational.py --op add --x (2/3) --y (-70/40)
+-13/12
+>>> run rational.py --op sub --x (-20/3) --y (120/470)
+-976/141
+>>> run rational.py --op mul --x (-6/19) --y (-114/18)
+2/1
+>>> run rational.py --op div --x (-6/19) --y (-114/-28)
+-28/361
+"""
+
+import sys, math
+
+def test_all_functions():  
+
+def gcd(a, b):  
+    while a != b:
+        if a > b:
+            a -= b
+        else:
+            b -= a
+    return a
+
+def reduce(n, d):  
+
+def add(x, y):  
+
+def sub(x, y):  
+
+def mul(x, y):  
+
+def div(x, y):  
+
+def output(x):  
+
+def get_rational(s):  
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print(__doc__)
+    elif len(sys.argv) == 2 and sys.argv[1] == '-h':
+        print(__doc__)
+    elif len(sys.argv) == 2 and sys.argv[1] == 'test':
+        test_all_functions()
+    else:
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--op', type=str)
+        parser.add_argument('--x', type=str)
+        parser.add_argument('--y', type=str)
+        args = parser.parse_args()
+        op = args.op
+        x = get_rational(args.x); y = get_rational(args.y)
+        f = {'add':add, 'sub':sub, 'mul':mul, 'div':div}
+        output(f[op](x, y))
+##### end of Listing 4.27 ##### 
+

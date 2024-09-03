@@ -1,0 +1,206 @@
+1.3-sum问题
+Code:
+def merge_ordered_lists(s1,s2):
+    t=[]
+    i=j=0
+    while i<len(s1) and j<len(s2):
+        if s1[i]<s2[j]:
+            t.append(s1[i])
+            i+=1
+        else:
+            t.append(s2[j])
+            j+=1
+    t+=s1[i:]
+    t+=s2[j:]
+    return t
+
+def merge_sort(s):
+    if len(s)<=1:
+        return s
+    mid=len(s)//2
+    left=merge_sort(s[:mid])
+    right=merge_sort(s[mid:])
+    return merge_ordered_lists(left,right)
+
+def binary_search(s,k):
+    low=0; high=len(s)-1
+    while low<=high:
+        mid=(low+high)//2
+        if k==s[mid]:
+            return mid
+        elif k<s[mid]:
+            high=mid-1
+        else:
+            low=mid+1
+    return -1
+
+def three_sum(s,x):
+    n=len(s)
+    for i in range(n-2):
+        for j in range(i+1,n-1):
+            if s[i]==x-s[i]-s[j] or s[j]==x-s[i]-s[j]:
+                continue
+            if binary_search(s,x-s[i]-s[j])!=-1:
+                print(s[i],s[j],x-s[i]-s[j])
+    return ()
+
+s=[21,73,6,67,99,60,77,5,51,32]
+s=merge_sort(s)
+three_sum(s,152)
+
+Running Results:
+In[1]: runfile('C:/Users/28932/Documents/Tencent Files/2893273886/FileRecv/3_sum.py', wdir='C:/Users/28932/Documents/Tencent Files/2893273886/FileRecv')
+21 32 99
+In[2]:
+
+2.排序
+Code：
+import timeit
+
+s1="""\
+import random
+
+def insertion_sort(s):
+    n=len(s)
+    for i in range(1,n):
+        value=s[i]
+        pos=i
+        while pos>0 and value<s[pos-1]:
+            s[pos]=s[pos-1]
+            pos-=1
+        s[pos]=value
+
+s=[random.random() for i in range(%d)]
+insertion_sort(s)
+"""
+
+s2="""\
+import random
+
+def merge_ordered_lists(s1,s2):
+    t=[]
+    i=j=0
+    while i<len(s1) and j<len(s2):
+        if s1[i]<s2[j]:
+            t.append(s1[i])
+            i+=1
+        else:
+            t.append(s2[j])
+            j+=1
+    t+=s1[i:]
+    t+=s2[j:]
+    return t
+
+def merge_sort(s):
+    if len(s)<=1:
+        return s
+    mid=len(s)//2
+    left=merge_sort(s[:mid])
+    right=merge_sort(s[mid:])
+    return merge_ordered_lists(left,right)
+
+s=[random.random() for i in range(%d)]
+merge_sort(s)
+"""
+
+s3="""\
+import random
+
+def qsort(s):
+    if len(s)<=1:
+        return s
+    s_less=[]; s_greater=[]; s_equal=[]
+    for k in s:
+        if k<s[0]:
+            s_less.append(k)
+        elif k>s[0]:
+            s_greater.append(k)
+        else:
+            s_equal.append(k)
+    return qsort(s_less)+s_equal+qsort(s_greater)
+
+s=[random.random() for i in range(%d)]
+qsort(s)
+"""
+
+print('insertion_sort:')
+for k in range (1,11):
+    timer=timeit.timeit(s1%(100*k),number=10)/10
+    print('%d : %.4f'%(100*k,timer),end='\n')
+print('\nmerge_sort:')
+for k in range (1,11):
+    timer=timeit.timeit(s2%(100*k),number=10)/10
+    print('%d : %.4f'%(100*k,timer),end='\n')
+print('\nqsort:')
+for k in range (1,11):
+    timer=timeit.timeit(s3%(100*k),number=10)/10
+    print('%d : %.4f'%(100*k,timer),end='\n')
+
+Running Results：
+In[1]: runfile('C:/Users/28932/Documents/Tencent Files/2893273886/FileRecv/timer1.py', wdir='C:/Users/28932/Documents/Tencent Files/2893273886/FileRecv')
+insertion_sort:
+100 : 0.0003
+200 : 0.0011
+300 : 0.0025
+400 : 0.0043
+500 : 0.0071
+600 : 0.0106
+700 : 0.0145
+800 : 0.0190
+900 : 0.0242
+1000 : 0.0311
+
+merge_sort:
+100 : 0.0001
+200 : 0.0003
+300 : 0.0005
+400 : 0.0007
+500 : 0.0008
+600 : 0.0011
+700 : 0.0013
+800 : 0.0015
+900 : 0.0017
+1000 : 0.0019
+
+qsort:
+100 : 0.0001
+200 : 0.0002
+300 : 0.0003
+400 : 0.0004
+500 : 0.0005
+600 : 0.0006
+700 : 0.0008
+800 : 0.0009
+900 : 0.0010
+1000 : 0.0012
+
+In[2]:
+
+3.测量
+Code：
+import time
+@profile
+def merge_ordered_lists(s1, s2):
+    t = []
+    i = j = 0
+    while i < len(s1) and j < len(s2):
+        if s1[i] < s2[j]:
+            t.append(s1[i]); i += 1
+        else:
+            t.append(s2[j]); j += 1
+    t += s1[i:]
+    t += s2[j:]
+    return t
+
+@profile
+def merge_sort(s):
+    if len(s) <= 1:
+        return s
+    mid = len(s) // 2
+    left = merge_sort(s[:mid])
+    right = merge_sort(s[mid:])
+    return merge_ordered_lists(left, right)
+
+s = [21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+merge_sort(s)
+

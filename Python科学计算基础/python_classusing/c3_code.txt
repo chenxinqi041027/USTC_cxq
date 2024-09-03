@@ -1,0 +1,143 @@
+#  单分支if语句计算绝对值
+x = int(input("Please enter an integer: "))
+y = x
+if x < 0:
+    y = -x
+print("The absolute value of %d is %d" %(x, y))
+
+ 
+#  多分支if语句计算绝对值
+x = int(input("Please enter an integer: "))
+if x < 0:
+    y = -x
+else:
+    y = x
+print("The absolute value of %d is %d" %(x, y))
+
+ 
+#  if-else表达式计算绝对值
+x = int(input("Please enter an integer: "))
+y = -x if x < 0 else x
+print("The absolute value of %d is %d" %(x, y))
+
+ 
+#  百分制成绩转换为等级分
+x = int(input("Please enter a score within [0, 100]: "))
+grade = 'F';          
+if x > 100 or x < 0:
+    grade = 'Z';      
+elif x >= 90:         
+    grade = 'A';
+elif x >= 80:         
+    grade = 'B';
+elif x >= 70:         
+    grade = 'C';
+elif x >= 60:         
+    grade = 'D';
+print("The grade of score %d is %c" %(x, grade))
+
+ 
+#  for语句输出1到10之间的所有自然数的和
+sum = 0; n = 10
+for i in range(1, n+1):
+    sum += i
+print("The sum of 1 to %d is %d" % (n, sum))
+
+ 
+#  for语句输出100到120之间的所有偶数
+lb = 100; ub = 120
+for i in range(lb, ub+1, 2):
+    print(i, end=' ')
+
+ 
+#  for语句输出一个由整数组成的集合中所包含的3的倍数
+nums = {25, 18, 91, 365, 12, 78, 59}
+for i in nums:
+    if i % 3 == 0: print(i, end=' ')
+
+ 
+#  for语句输出一个通讯录中的每个联系人的姓名和对应的电话号码
+contacts = {"Tom":12345, "Jerry":54321, "Mary":23415}
+
+for name, num in contacts.items():
+    print('%s -> %d' % (name, num), end='; ')
+print()
+for name in contacts.keys():
+    print('%s -> %d' % (name, contacts[name]), end='; ')
+
+ 
+#  for语句输出一个字符串中的所有字符和其对应的Unicode编码值
+s = 'Python'
+for c in s:
+    print('(%s : %d)' % (c, ord(c)), end=' ')
+
+ 
+#  for语句和break语句输出100到200之间的所有质数
+import math
+lb = 100; ub = 200
+if lb % 2 == 0: lb += 1
+if ub % 2 == 0: ub -= 1
+for i in range(lb, ub + 1, 2):
+    isPrime = True
+    for j in range(2, math.ceil(math.sqrt(i)) + 1):
+        if i % j == 0:
+            isPrime = False
+            break
+    if isPrime: print(i, end=' ')
+
+ 
+#  for语句和continue语句输出100到200之间的所有质数
+import math
+lb = 100; ub = 200
+if lb % 2 == 0: lb += 1
+if ub % 2 == 0: ub -= 1
+for i in range(lb, ub + 1, 2):
+    isPrime = True
+    for j in range(2, math.ceil(math.sqrt(i)) + 1):
+        if i % j == 0:
+            isPrime = False
+            break
+    if not isPrime: continue
+    print(i, end=' ')
+
+ 
+#  while语句输出1到10之间的所有自然数的和
+sum = 0; n = 10; i = 1
+while i <= n:
+    sum += i
+    i += 1
+print("The sum of 1 to %d is %d" % (n, sum))
+
+ 
+#  while语句输出100到120之间的所有偶数
+i = lb = 100; ub = 120
+while i <= ub:
+    print(i, end=' ')
+    i += 2
+
+ 
+#  辗转相减法求两个正整数的最大公约数
+a = 156; b = 732
+str = 'The greatest common divisor of %d and %d is ' % (a, b)
+while a != b:
+    if a > b:
+        a -= b;
+    else:
+        b -= a;
+print(str + ('%d' % a))
+
+ 
+#  推导式的用法
+nums = {25, 18, 91, 365, 12, 78, 59}
+multiplier_of_3 = [n for n in nums if n % 3 == 0]
+print(multiplier_of_3)  
+square_of_odds = {n*n for n in nums if n % 2 == 1}
+print(square_of_odds)   
+
+s = [25, 18, 91, 365, 12, 78, 59, 18, 91]
+sr = {n:n%3 for n in set(s)}
+print(sr)  
+tr = {n:r for (n,r) in sr.items() if r==0}
+print(tr)  
+
+ 

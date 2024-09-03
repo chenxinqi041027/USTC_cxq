@@ -1,0 +1,312 @@
+##### start of Listing 8.1 ##### 
+def insertion_sort(s):
+    n = len(s)
+    for i in range(1, n):
+        value = s[i]; print('insert %2d: ' % value, end = ' ')
+        pos = i
+        while pos > 0 and value < s[pos - 1] :
+            s[pos] = s[pos - 1]
+            pos -= 1
+        s[pos] = value
+        print(s)
+
+s = [21, 73, 6, 67, 99, 60, 77, 5, 51, 32]; print(s)
+insertion_sort(s)
+##### end of Listing 8.1 ##### 
+
+##### start of Listing 8.2 ##### 
+[21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+insert 73:  [21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+insert  6:  [6, 21, 73, 67, 99, 60, 77, 5, 51, 32]
+insert 67:  [6, 21, 67, 73, 99, 60, 77, 5, 51, 32]
+insert 99:  [6, 21, 67, 73, 99, 60, 77, 5, 51, 32]
+insert 60:  [6, 21, 60, 67, 73, 99, 77, 5, 51, 32]
+insert 77:  [6, 21, 60, 67, 73, 77, 99, 5, 51, 32]
+insert  5:  [5, 6, 21, 60, 67, 73, 77, 99, 51, 32]
+insert 51:  [5, 6, 21, 51, 60, 67, 73, 77, 99, 32]
+insert 32:  [5, 6, 21, 32, 51, 60, 67, 73, 77, 99]
+##### end of Listing 8.2 ##### 
+
+##### start of Listing 8.3 ##### 
+def merge_ordered_lists(s1, s2):
+    t = []
+    i = j = 0
+    while i < len(s1) and j < len(s2):
+        if s1[i] < s2[j]:
+            t.append(s1[i]); i += 1
+        else:
+            t.append(s2[j]); j += 1
+    t += s1[i:]
+    t += s2[j:]
+    print('%s + %s => %s' % (s1, s2, t));
+    return t
+
+def merge_sort(s):
+    if len(s) <= 1:
+        return s
+    mid = len(s) // 2
+    print('%s -> %s + %s' % (s, s[:mid], s[mid:]));
+    left = merge_sort(s[:mid])
+    right = merge_sort(s[mid:])
+    return merge_ordered_lists(left, right)
+
+s = [21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+print(s); print(merge_sort(s))
+##### end of Listing 8.3 ##### 
+
+##### start of Listing 8.4 ##### 
+[21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+[21, 73, 6, 67, 99, 60, 77, 5, 51, 32] ->
+    [21, 73, 6, 67, 99] + [60, 77, 5, 51, 32]
+[21, 73, 6, 67, 99] -> [21, 73] + [6, 67, 99]
+[21, 73] -> [21] + [73]
+[21] + [73] => [21, 73]
+[6, 67, 99] -> [6] + [67, 99]
+[67, 99] -> [67] + [99]
+[67] + [99] => [67, 99]
+[6] + [67, 99] => [6, 67, 99]
+[21, 73] + [6, 67, 99] => [6, 21, 67, 73, 99]
+[60, 77, 5, 51, 32] -> [60, 77] + [5, 51, 32]
+[60, 77] -> [60] + [77]
+[60] + [77] => [60, 77]
+[5, 51, 32] -> [5] + [51, 32]
+[51, 32] -> [51] + [32]
+[51] + [32] => [32, 51]
+[5] + [32, 51] => [5, 32, 51]
+[60, 77] + [5, 32, 51] => [5, 32, 51, 60, 77]
+[6, 21, 67, 73, 99] + [5, 32, 51, 60, 77] =>
+    [5, 6, 21, 32, 51, 60, 67, 73, 77, 99]
+[5, 6, 21, 32, 51, 60, 67, 73, 77, 99]
+##### end of Listing 8.4 ##### 
+
+##### start of Listing 8.5 ##### 
+def linear_search(s, k):
+    for i in range(len(s)):
+        if s[i] == k: return i
+    return -1
+##### end of Listing 8.5 ##### 
+
+##### start of Listing 8.6 ##### 
+def binary_search(s, k):
+    low = 0; high = len(s) - 1
+    while low <= high:
+        mid = (high + low) // 2
+        print('(%2d,  %2d) low = %d, mid = %d, high = %d'
+               % (k, s[mid], low, mid, high))
+        if k == s[mid]:
+            return mid
+        elif k < s[mid]:
+            high = mid - 1
+        else:
+            low = mid + 1
+    return -1
+
+s = [5, 6, 21, 32, 51, 60, 67, 73, 77, 99]
+print(binary_search(s, 77)); print(binary_search(s, 31))
+##### end of Listing 8.6 ##### 
+
+##### start of Listing 8.7 ##### 
+(77,  51) low = 0, mid = 4, high = 9
+(77,  73) low = 5, mid = 7, high = 9
+(77,  77) low = 8, mid = 8, high = 9
+8
+(31,  51) low = 0, mid = 4, high = 9
+(31,   6) low = 0, mid = 1, high = 3
+(31,  21) low = 2, mid = 2, high = 3
+(31,  32) low = 3, mid = 3, high = 3
+-1
+##### end of Listing 8.7 ##### 
+
+##### start of Listing 8.8 ##### 
+def exhaustive_search_3_sum(s, x):
+    n = len(s)
+    for i in range(n - 2):
+        for j in range(i + 1, n - 1):
+            for k in range(j + 1, n):
+                if s[i] + s[j] + s[k] == x:
+                    return s[i], s[j], s[k]
+    return ()
+
+s = [21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+print(exhaustive_search_3Sum(s, 152))  
+##### end of Listing 8.8 ##### 
+
+##### start of Listing 8.9 ##### 
+def exhaustive_search_subset_sum(s, x):
+    n = len(s)
+    for i in range(1, 2 ** n):
+        subset = []
+        for j in range(n):
+            if (i >> j) % 2 == 1: subset.append(s[j])
+        if sum(subset) == x: return subset
+    return []
+
+s = [21, 73, 6, 67, 99, 60, 77, 5, 51, 32]
+print(exhaustive_search_subset_Sum(s, 135))  
+##### end of Listing 8.9 ##### 
+
+##### start of Listing 8.10 ##### 
+s1 = """\
+a = []
+for i in range(100000):
+    a.append(i)
+"""
+
+s2 = """\
+import random
+def sort_random_list(n):
+    alist = [random.random() for i in range(n)]
+    alist.sort()
+
+sort_random_list(%d)
+"""
+
+import timeit
+N = 10
+print('%.4f' % (timeit.timeit(stmt=s1, number=N) / N)) 
+
+for n in [10000, 20000, 40000, 80000]:
+    t = timeit.timeit(stmt=s2 % n, number=N) / N
+    print('%d : %.4f' % (n, t), end = ' ')
+##### end of Listing 8.10 ##### 
+
+##### start of Listing 8.11 ##### 
+import time; import array; import numpy as np
+
+x1, x2, y1, y2 = -1.8, 1.8, -1.8, 1.8    
+c_real, c_imag = -0.62772, -.42193
+
+@profile
+def calc_z_python(max_iter, zs, c):
+    output = [0] * len(zs)
+    for i in range(len(zs)):
+        z = zs[i];  n = 0
+        while abs(z) < 2 and n < max_iter:
+            z = z * z + c; n += 1
+        output[i] = n
+    return output
+
+@profile
+def calc_Julia(show, length, max_iter):
+    xs = np.linspace(x1, x2, length)
+    ys = np.linspace(y1, y2, length)
+    zs = []; c = complex(c_real, c_imag)
+    for x in xs:
+         for y in ys:
+             zs.append(complex(x, y))
+    start_time = time.time()
+    output = calc_z_python(max_iter, zs, c)
+    end_time = time.time()
+    print("%.4fs" % (end_time - start_time))  
+    if show: show_image(output, length, max_iter)
+
+from PIL import Image
+def show_image(output_raw, length, max_iter):
+    
+    max_value = float(max(output_raw))
+    output_raw_limited = [int(float(o) / max_value * 215) \
+                          for o in output_raw]
+    rgb = array.array('B')
+    for o in output_raw_limited:
+        r = o // 36; o = o % 36; g = o // 6; b = o % 6
+        rgb.append(r*50); rgb.append(g*50); rgb.append(b*50);
+    im = Image.new("RGB", (length, length));
+    im.frombytes(rgb.tobytes(), "raw", "RGB")
+    im.show()
+
+calc_Julia(show=False, length=500, max_iter=200)
+##### end of Listing 8.11 ##### 
+
+##### start of Listing 8.12 ##### 
+import cython; import numpy as np
+
+@cython.cdivision(True)
+def calc_pi(int n):
+    cdef double pi = 0
+    cdef int i
+    for i in range(1, n, 4):
+        pi += 4.0 / i
+    for i in range(3, n, 4):
+        pi -= 4.0 / i
+    return pi
+##### end of Listing 8.12 ##### 
+
+##### start of Listing 8.13 ##### 
+from distutils.core import setup
+from Cython.Build import cythonize
+import numpy as np
+setup(ext_modules=cythonize('calc_pi_cython.pyx'),
+include_dirs=[np.get_include()],
+requires=['Cython', 'numpy'])
+##### end of Listing 8.13 ##### 
+
+##### start of Listing 8.14 ##### 
+python setup_pi.py build_ext --inplace
+##### end of Listing 8.14 ##### 
+
+##### start of Listing 8.15 ##### 
+%cd D:\Python\src\calc_pi
+##### end of Listing 8.15 ##### 
+
+##### start of Listing 8.16 ##### 
+s1 = """\
+from calc_pi_cython import calc_pi
+calc_pi(%d)
+"""
+
+s2 = """\
+import numpy as np
+n = %d
+np.sum(4.0 / np.r_[1:n:4, -3:-n:-4])
+"""
+
+import timeit
+N = 10; n = 10000000
+print("%.4f" % (timeit.timeit(stmt=s1%n, number=N) / N))
+print("%.4f" % (timeit.timeit(stmt=s2%n, number=N) / N))
+##### end of Listing 8.16 ##### 
+
+##### start of Listing 8.17 ##### 
+def calc_z(int maxiter, zs, c):
+    """calc output list using Julia update rule"""
+    cdef unsigned int i, n
+    cdef double complex z
+    output = [0] * len(zs)
+    for i in range(len(zs)):
+        n = 0
+        z = zs[i]
+        while n < maxiter and \
+            (z.real * z.real + z.imag * z.imag) < 4:
+            z = z * z + c
+            n += 1
+        output[i] = n
+    return output
+##### end of Listing 8.17 ##### 
+
+##### start of Listing 8.18 ##### 
+from distutils.core import setup
+from Cython.Build import cythonize
+setup(ext_modules=cythonize("calc_z_cython.pyx"))
+##### end of Listing 8.18 ##### 
+
+##### start of Listing 8.19 ##### 
+python setup_z.py build_ext --inplace
+##### end of Listing 8.19 ##### 
+
+##### start of Listing 8.20 ##### 
+import time; import array; import numpy as np
+from calc_z_cython import calc_z
+
+...
+
+def calc_Julia(show, length, max_iter):
+    ...
+    start_time = time.time()
+    output = calc_z_python(max_iter, zs, c)
+    end_time = time.time()
+    print("%.4fs" % (end_time - start_time))  
+    if show: show_image(output, length, max_iter)
+
+...
+##### end of Listing 8.20 ##### 
+

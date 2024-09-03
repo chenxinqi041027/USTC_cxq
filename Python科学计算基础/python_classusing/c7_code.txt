@@ -1,0 +1,342 @@
+##### start of Listing 7.1 ##### 
+sum = 0
+for i in range(1, 10):
+    sum += i
+print("The sum of 1 to 10 is %d" % sum) 
+##### end of Listing 7.1 ##### 
+
+##### start of Listing 7.2 ##### 
+import numpy as np
+
+def Gaussian_elimination_v1(A):
+    m, n = np.shape(A)
+    for j in range(n - 1):
+        for i in range(j + 1, m):
+            A[i, :] -= (A[i, j] / A[j, j]) * A[j, :]
+    return A
+
+A = np.array([[2.0,3,5,7],[11,13,17,19],[23,29,31,37]])
+print(Gaussian_elimination_v1(A))
+
+B = np.array([[2.0,3,5,7],[12,18,17,19],[23,29,31,37]])
+print(Gaussian_elimination_v1(B))
+##### end of Listing 7.2 ##### 
+
+##### start of Listing 7.3 ##### 
+[[  2.           3.           5.           7.        ]
+ [  0.          -3.5        -10.5        -19.5       ]
+ [  0.           0.         -10.         -12.85714286]]
+[[  2.   3.   5.   7.]
+ [  0.   0. -13. -23.]
+ [ nan  nan -inf -inf]]
+C:\Users\user\.spyder-py3\temp.py:7:
+  RuntimeWarning: divide by zero encountered in double_scalars
+  A[i, :] -= (A[i, j] / A[j, j]) * A[j, :]
+C:\Users\user\.spyder-py3\temp.py:7:
+  RuntimeWarning: invalid value encountered in multiply
+  A[i, :] -= (A[i, j] / A[j, j]) * A[j, :]
+##### end of Listing 7.3 ##### 
+
+##### start of Listing 7.4 ##### 
+import numpy as np
+
+def Gaussian_elimination_v1(A):
+    m, n = np.shape(A)
+    for j in range(n - 1):
+        for i in range(j + 1, m):
+            if abs(A[j, j]) < 1e-10:
+                i += 0
+            A[i, :] -= (A[i, j] / A[j, j]) * A[j, :]
+    return A
+...
+##### end of Listing 7.4 ##### 
+
+##### start of Listing 7.5 ##### 
+import numpy as np
+
+def Gaussian_elimination_v2(A, tol = 1e-10):
+    m, n = np.shape(A)
+    i = 0
+    for j in range(n):
+        p = np.argmax(abs(A[i:m, j]))
+        if p > 0:                       
+            A[[i, p + i]] = A[[p + i, i]]  
+        if abs(A[i, j]) > tol:          
+            for r in range(i + 1, m):
+                A[r, j:] -= (A[r, j] / A[i, j]) * A[i, j:]
+            i += 1
+            if i >= m: break
+    return A, i
+##### end of Listing 7.5 ##### 
+
+##### start of Listing 7.6 ##### 
+def gcd(a, b):
+    while a != b:
+        if a > b:
+            a -= b
+        else:
+            b -= a
+    return a
+
+import sys
+try:
+    x = int(sys.argv[1])
+    y = int(sys.argv[2])
+except IndexError:
+    print('Two arguments must be supplied on the command line')
+except ValueError:
+    print('Each argument should be an integer.')
+else:
+    print('The greatest common divisor of %d and %d is %d' %\
+           (x, y, gcd(x, y)))
+##### end of Listing 7.6 ##### 
+
+##### start of Listing 7.7 ##### 
+In[1]: run d:\python\src\gcd_ex.py 4
+Out[1]: Two arguments must be supplied on the command line
+In[2]: run d:\python\src\gcd_ex.py 4 6o
+Out[2]: Each argument should be an integer.
+In[3]: run d:\python\src\gcd_ex.py 4 60
+Out[3]: The greatest common divisor of 4 and 60 is 4
+##### end of Listing 7.7 ##### 
+
+##### start of Listing 7.8 ##### 
+class InputRangeError(Exception):
+    """Raised when an input is not in suitable range
+       Attributes:
+           message -- explanation of suitable range
+    """
+    def __init__(self, message):
+        self.message = message
+
+def gcd(a, b):
+    if a <= 0 or b <= 0:
+        raise InputRangeError('Each integer should be positive')
+    while a != b:
+        if a > b:
+            a -= b
+        else:
+            b -= a
+    return a
+
+import sys
+try:
+    x = int(sys.argv[1])
+    y = int(sys.argv[2])
+    print('The greatest common divisor of %d and %d is %d' %\
+           (x, y, gcd(x, y)))
+except IndexError:
+    print('Two arguments must be supplied on the command line')
+except ValueError:
+    print('Each argument should be an integer.')
+except InputRangeError as ex:
+    print(ex.message)
+finally:
+    print("executing finally clause")
+##### end of Listing 7.8 ##### 
+
+##### start of Listing 7.9 ##### 
+In[1]: run d:\python\src\gcd_ex.py -48 126
+Out[1]: Each integer should be positive
+        executing finally clause
+In[2]: run d:\python\src\gcd_ex.py 48 126
+Out[2]: The greatest common divisor of 48 and 126 is 6
+        executing finally clause
+##### end of Listing 7.9 ##### 
+
+##### start of Listing 7.10 ##### 
+Average rainfall (in mm) in HEFEI: 459 months between 1951 and 1990
+Jan  32.2
+Feb  53.2
+Mar  71.8
+Apr  92.5
+May  101.5
+Jun  117.3
+Jul  175.7
+Aug  117.7
+Sep  85.6
+Oct  60.7
+Nov  51.2
+Dec  27.6
+Year 988.7
+##### end of Listing 7.10 ##### 
+
+##### start of Listing 7.11 ##### 
+def extract_data(filename):
+    with open(filename, 'r') as infile:
+        infile.readline() 
+        rainfall = {}
+        for line in infile:
+            if line.find('Year') >= 0: break
+            words = line.split() 
+            rainfall[words[0]] = float(words[1])
+    return rainfall
+
+import sys
+rainfall = extract_data('D:/Python/src/rainfall.dat')
+max = -sys.float_info.max; min = sys.float_info.max; sum = 0
+for month in rainfall.keys():
+    rainfall_month = rainfall[month]
+    sum += rainfall_month
+    if max < rainfall_month:
+        max = rainfall_month; max_month = month
+    if min > rainfall_month:
+        min = rainfall_month; min_month = month
+
+with open('D:/Python/src/rainfall_stat.dat', 'w') as outfile:
+    outfile.write('The maximum rainfall of %.1f occurs in %s\n' 
+                   %\ (max, max_month))
+    outfile.write('The minimum rainfall of %.1f occurs in %s\n' 
+                   %\ (min, min_month))
+    outfile.write('The average rainfall is %.1f' % (sum / 12))
+##### end of Listing 7.11 ##### 
+
+##### start of Listing 7.12 ##### 
+The maximum rainfall of 175.7 occurs in Jul
+The minimum rainfall of 27.6 occurs in Dec
+The average rainfall is 82.3
+##### end of Listing 7.12 ##### 
+
+##### start of Listing 7.13 ##### 
+import csv, pprint
+with open('D:/Python/src/scores.csv', 'r') as infile:
+    table = [row for row in csv.reader(infile)]
+
+rows = len(table); cols = len(table[0])
+
+for r in range(1, rows):
+    for c in range(1, cols):
+        table[r][c] = float(table[r][c])
+
+table[0].append('Total')
+for r in range(1, rows):
+    total = 0
+    for c in range(1, cols):
+        total += table[r][c]
+    table[r].append(total)
+
+row = ['Average']
+for c in range(1, cols):
+    avg = 0
+    for r in range(1, rows):
+        avg += table[r][c]
+    row.append(avg / (rows - 1))
+table.append(row)
+
+pprint.pprint(table)
+
+with open('D:/Python/src/scores2.csv', 'w', newline='') as outfile:
+    writer = csv.writer(outfile)
+    for row in table:
+        writer.writerow(row)
+##### end of Listing 7.13 ##### 
+
+##### start of Listing 7.14 ##### 
+Name,Math,Physics,English
+Tom,95,91,81
+Jerry,89,82,86
+Mary,83,80,96
+##### end of Listing 7.14 ##### 
+
+##### start of Listing 7.15 ##### 
+Name,Math,Physics,English,Total
+Tom,95.0,91.0,81.0,267.0
+Jerry,89.0,82.0,86.0,257.0
+Mary,83.0,80.0,96.0,259.0
+Betty,88.0,96.0,93.0,277.0
+Average,88.75,87.25,89.0
+##### end of Listing 7.15 ##### 
+
+##### start of Listing 7.16 ##### 
+import json, pprint
+
+contacts = [
+    {"Name":"Tom", "Phone":12345, "Address":"100 Wall St."},
+    {"Name":"Jerry", "Phone":54321, "Address":"200 Main St."},
+    {"Name":"Mary", "Phone":23415, "Address":"300 Fifth Ave."}
+]
+
+with open('D:/Python/src/contacts.json', 'w') as outfile:
+    json.dump(contacts, outfile)
+
+with open('D:/Python/src/contacts.json', 'r') as infile:
+    x = json.load(infile)
+
+pprint.pprint(x)
+##### end of Listing 7.16 ##### 
+
+##### start of Listing 7.17 ##### 
+[{"Name": "Tom", "Phone": 12345, "Address": "100 Wall St."},
+ {"Name": "Jerry", "Phone": 54321, "Address": "200 Main St."},
+ {"Name": "Mary", "Phone": 23415, "Address": "300 Fifth Ave."}]
+##### end of Listing 7.17 ##### 
+
+##### start of Listing 7.18 ##### 
+[{'Address': '100 Wall St.', 'Name': 'Tom', 'Phone': 12345},
+ {'Address': '200 Main St.', 'Name': 'Jerry', 'Phone': 54321},
+ {'Address': '300 Fifth Ave.', 'Name': 'Mary', 'Phone': 23415}]
+##### end of Listing 7.18 ##### 
+
+##### start of Listing 7.19 ##### 
+import pickle, pprint
+
+contacts = [
+    {"Name":"Tom", "Phone":12345, "Address":"100 Wall St."},
+    {"Name":"Jerry", "Phone":54321, "Address":"200 Main St."},
+    {"Name":"Mary", "Phone":23415, "Address":"300 Fifth Ave."}
+    ]
+
+with open('D:/Python/src/contacts.pickle', 'wb') as outfile:
+    pickle.dump(contacts, outfile)
+
+with open('D:/Python/src/contacts.pickle', 'rb') as infile:
+    x = pickle.load(infile)
+
+pprint.pprint(x)
+##### end of Listing 7.19 ##### 
+
+##### start of Listing 7.20 ##### 
+[{'Address': '100 Wall St.', 'Name': 'Tom', 'Phone': 12345},
+ {'Address': '200 Main St.', 'Name': 'Jerry', 'Phone': 54321},
+ {'Address': '300 Fifth Ave.', 'Name': 'Mary', 'Phone': 23415}]
+##### end of Listing 7.20 ##### 
+
+##### start of Listing 7.21 ##### 
+In[1]: import numpy as np; a = np.arange(1, 16, 2)**2; a
+Out[1]: array([  1,   9,  25,  49,  81, 121, 169, 225], 
+              dtype=int32)
+In[2]: b = a.reshape(2, 4); b
+Out[2]:
+array([[  1,   9,  25,  49],
+       [ 81, 121, 169, 225]], dtype=int32)
+In[3]: np.savetxt('D:/Python/dat/b.txt', b)
+In[4]: c = np.loadtxt('D:/Python/dat/b.txt'); c
+Out[4]:
+array([[  1.,   9.,  25.,  49.],
+       [ 81., 121., 169., 225.]])
+In[5]: np.save('D:/Python/dat/b.npy', b)
+In[6]: c = np.load('D:/Python/dat/b.npy'); c
+Out[6]:
+array([[  1,   9,  25,  49],
+       [ 81, 121, 169, 225]])
+In[7]: np.savez('D:/Python/dat/ab.npz', a, b)
+In[8]: cd = np.load('D:/Python/dat/ab.npz')
+In[9]: c = cd['arr_0']; c
+Out[9]: array([  1,   9,  25,  49,  81, 121, 169, 225])
+In[10]: d = cd['arr_1']; d
+Out[10]:
+array([[  1,   9,  25,  49],
+       [ 81, 121, 169, 225]])
+##### end of Listing 7.21 ##### 
+
+##### start of Listing 7.22 ##### 
+import numpy as np; a = np.arange(1, 16, 2)**2; a
+b = a.reshape(2, 4); b
+np.savetxt('D:/Python/dat/b.txt', b)
+c = np.loadtxt('D:/Python/dat/b.txt'); c
+np.save('D:/Python/dat/b.npy', b)
+c = np.load('D:/Python/dat/b.npy'); c
+np.savez('D:/Python/dat/ab.npz', a, b)
+......
+##### end of Listing 7.22 ##### 
+
