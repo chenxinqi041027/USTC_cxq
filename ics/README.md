@@ -2,6 +2,6 @@ USTC 2023秋 计算机系统概论A 陈俊仕老师班
 
 内含实验和作业以及各种资料
 
-强烈安利https://users.ece.utexas.edu/~patt/21f.306/exams.html这个网站，内含外校的试卷
+强烈安利https://users.ece.utexas.edu/~patt/21f.306/exams.html 这个网站，内含外校的试卷
 
 考试前把上面的试卷做了分不会低（妮可的试卷会比国外学校的试卷题目数量更多，做起来更恶心）
