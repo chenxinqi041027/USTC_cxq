@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PB22111711-陈昕琪-HW3.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///c%3A//Users//28932//.crossnote//style.less" type="text/css">
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="homework-3">Homework 3</h1>
+<h2 id="pb22111711-%E9%99%88%E6%98%95%E7%90%AA"><strong>PB22111711 陈昕琪</strong></h2>
+<hr>
+<h2 id="t1">T1</h2>
+<hr>
+<p>64位操作数需要6bits，56个寄存器也需要6bits，而32bits的指令由OPCODE（操作数），SR（源寄存器），DR（目标寄存器）组成，因此IMM可表示的位数为32-6-6-6=14bits，又因为IMM是二进制补数，因此可以表示的数值范围是
+$$-2^{13}~2^{13}-1$$</p>
+<h2 id="t2">T2</h2>
+<hr>
+<h2 id="t3">T3</h2>
+<hr>
+<p>x3000 0001 000 001 0 00 010
+ADD,将R1+R2的内容储存到R0中
+x3001 0000 001 000000111
+BR,判断最近装入寄存器的内容是否&gt;=0，如果成立，则offset9=7，因此只需R1+R2的值&gt;=0即可</p>
+<h2 id="t4">T4</h2>
+<hr>
+<ol>
+<li>对ADD（0001）和AND（0101）操作是有好处的，寄存器位数变小可以使IMM位数变大，可操作空间更大。
+对于NOT（1001）则无影响，因为NOT指令除了操作数，目的寄存器，源寄存器其余位全为1，所以无影响。</li>
+<li>对LD（0010）和ST（0011）操作是有好处的，寄存器位数变小可以使偏移量更大，有更大的操作空间。</li>
+<li>对BR（0000）无影响，BR指令本身不带寄存器</li>
+</ol>
+<h2 id="t5">T5</h2>
+<hr>
+<p>观察电路图得知，只有当WE=1且A[1:0]经过逻辑门后显示为1时，才能输入内存，因此只需考虑WE=1的情况即可。
+根据电路图得知，最终锁存的数据为</p>
+<table>
+<thead>
+<tr>
+<th>A[1:0]</th>
+<th>Cycle No.</th>
+<th>$D_{in}[2:0]$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>6</td>
+<td>101</td>
+</tr>
+<tr>
+<td>01</td>
+<td>4</td>
+<td>011</td>
+</tr>
+<tr>
+<td>10</td>
+<td>3</td>
+<td>010</td>
+</tr>
+<tr>
+<td>11</td>
+<td>7</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+<p>对于第八个cycle结束时，$$D_{in}[2:0]=101$$，并分析此时的电路图得出的结果如下：</p>
+<h2 id="t6">T6</h2>
+<hr>
+<p>MDR用来保存要被写入地址单元或者从地址单元读入的数据。MAR用来保存数据被传输到的位置的地址或者数据来源位置的地址。
+注意到从 Access1 到 Access3 ， x4000 的值和 x4001 的值都变化了，并且 x4001 末态的值和
+x4000 不同，证明 Access1-3 应该读入一次写入两次（实际上可以假定存在 Access0 是对于 x4000
+的数据的读入？），那么 Operation No.2 应为 R ； 观察 x4001 的数据来源，符合 _0__0 特点的只有
+x4003 。观察从 Access3 到 Access5 ， x4003 的值也变化，且 01101 和 Operation No.2 读入的数据不同，
+那么 Operation No.4-5 应该是先 R 后 W ；考虑从哪里读入 01101，只能是 x4002 ，那么第一张表
+格补全如下：</p>
+<table>
+<thead>
+<tr>
+<th>Operation No.</th>
+<th>R/W</th>
+<th>MAR</th>
+<th>MDR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>W</td>
+<td>x4000</td>
+<td>11110</td>
+</tr>
+<tr>
+<td>2</td>
+<td>R</td>
+<td>x4003</td>
+<td>10110</td>
+</tr>
+<tr>
+<td>3</td>
+<td>W</td>
+<td>x4001</td>
+<td>10110</td>
+</tr>
+<tr>
+<td>4</td>
+<td>R</td>
+<td>x4002</td>
+<td>01101</td>
+</tr>
+<tr>
+<td>5</td>
+<td>W</td>
+<td>x4003</td>
+<td>01101</td>
+</tr>
+</tbody>
+</table>
+<p>第二张表补全如下：</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Before Access 1</th>
+<th>After Access 3</th>
+<th>After Access 5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x4000</td>
+<td>01101</td>
+<td>11110</td>
+<td>11110</td>
+</tr>
+<tr>
+<td>x4001</td>
+<td>11010</td>
+<td>10110</td>
+<td>10110</td>
+</tr>
+<tr>
+<td>x4002</td>
+<td>01101</td>
+<td>01101</td>
+<td>01101</td>
+</tr>
+<tr>
+<td>x4003</td>
+<td>10110</td>
+<td>10110</td>
+<td>01101</td>
+</tr>
+<tr>
+<td>x4004</td>
+<td>11110</td>
+<td>11110</td>
+<td>11110</td>
+</tr>
+</tbody>
+</table>
+<h2 id="t7">T7</h2>
+<hr>
+<h2 id="t8">T8</h2>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x3000</td>
+<td>1001 111 001 111111</td>
+</tr>
+<tr>
+<td>x3001</td>
+<td>1001 100 010 111111</td>
+</tr>
+<tr>
+<td>x3002</td>
+<td>0101 101 111 000 010</td>
+</tr>
+<tr>
+<td>x3003</td>
+<td>0101 100 110 000 001</td>
+</tr>
+<tr>
+<td>x3004</td>
+<td>1001 001 101 111111</td>
+</tr>
+<tr>
+<td>x3005</td>
+<td>1001 010 100 111111</td>
+</tr>
+<tr>
+<td>x3006</td>
+<td>0101 000 001 000 010</td>
+</tr>
+<tr>
+<td>x3007</td>
+<td>1001 011 000 111111</td>
+</tr>
+</tbody>
+</table>
+<h2 id="t9">T9</h2>
+<hr>
+<h2 id="t10">T10</h2>
+<hr>
+<p>使用 BR 指令时，如果上一个操作过的寄存器的值符合指令中的 n z p 的条件，则对现有的 PC 进行
+offset 跳转，否则继续执行下一个指令。这要求我们必须预知或者规定 BR 前面的一条语句，以及 PC 此
+时的地址。 JMP 指令则不需要知道这些，使用直接寻址跳转，非常方便。</p>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ tex2jax: {inlineMath: [['$', '$']]}, messageStyle: "none" });</script>
+</body>
+</html>
