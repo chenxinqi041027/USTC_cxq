@@ -1,0 +1,4 @@
+{
+    "verilog.ctags.path": "ctags",
+    "verilog.linting.linter": "xvlog"
+}

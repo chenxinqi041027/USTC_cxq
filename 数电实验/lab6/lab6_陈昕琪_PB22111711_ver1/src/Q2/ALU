@@ -1,0 +1,87 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 2023/11/21 17:12:43
+// Design Name: 
+// Module Name: ALU
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module ALU(
+    input                   [31 : 0]        src0, src1,
+    input                   [11 : 0]        sel,
+    output                  [31 : 0]        res
+);
+// Write your code here
+wire [31:0] adder_out;
+wire [31:0] sub_out;
+wire [0 :0] stl_out;//有符号小于比较
+wire [0 :0] stlu_out;//无符号小于比较
+wire [31:0] AND_out;
+wire [31:0] OR_out;
+wire [31:0] NOR_out;
+wire [31:0] XOR_out;
+wire [31:0] SLL_out;
+wire [31:0] SRL_out;
+wire [31:0] SRA_out;
+wire [31:0] SRC1_out;
+
+Adder adder(
+    .a(src0),
+    .b(src1),
+    .ci(1'B0),
+    .s(adder_out),
+    .co()
+);
+
+AddSub sub(
+    .a(src0),
+    .b(src1),
+    .out(sub_out),
+    .co()
+);
+
+Comp comp(
+    .a(src0),
+    .b(src1),
+    .ul(stlu_out),
+    .sl(stl_out)
+);
+
+assign AND_out = src0 & src1;
+assign OR_out = src0 | src1;
+assign NOR_out = ~( src0 | src1 );
+assign XOR_out = src0 ^ src1;
+assign SLL_out = src0 << src1[4:0];
+assign SRL_out = src0 >> src1[4:0];
+assign SRA_out = src0 >>> src1[4:0];
+assign SRC1_out = src1;
+// TODO：完成 res 信号的选择
+assign res = ({32{sel[0]}} & adder_out) |
+             ({32{sel[1]}} & sub_out) |
+             ({32{sel[2]}} & stl_out) |
+             ({32{sel[3]}} & stlu_out) |
+             ({32{sel[4]}} & AND_out) |
+             ({32{sel[5]}} & OR_out) |
+             ({32{sel[6]}} & NOR_out) |
+             ({32{sel[7]}} & XOR_out) |
+             ({32{sel[8]}} & SLL_out) |
+             ({32{sel[9]}} & SRL_out) |
+             ({32{sel[10]}} & SRA_out) |
+             ({32{sel[11]}} & SRC1_out);
+// End of your code
+endmodule
+

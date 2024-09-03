@@ -1,0 +1,22 @@
+6 20
+a b c d e f
+a b 5
+a c 12
+a d 5
+b d 7
+b e 8
+c f 3
+c b 9
+e d 8
+e c 16
+e f 4
+b a 5
+c a 12
+d a 5
+d b 7
+e b 8
+f c 3
+b c 9
+d e 8
+c e 16
+f e 4
